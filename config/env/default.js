@@ -5,18 +5,18 @@ module.exports = {
         AppTitle: '404gaming',
         AppDescription: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
         keywords: 'mongodb, express, angularjs, node.js, mongoose, passport',
-        googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID',
-        googleRecaptchaPublic: process.env.GOOGLE_RECAPTCHA_PUBLIC || 'SECRET',
-        googleRecaptchaSecret: process.env.GOOGLE_RECAPTCHA_SECRET || 'SECRET',
+        googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'UA-96461510-1',
+        googleRecaptchaPublic: process.env.GOOGLE_RECAPTCHA_PUBLIC || '6LdogRsUAAAAAOZgwgIXB7QTPdjRNgkrOXP2WH0c',
+        googleRecaptchaSecret: process.env.GOOGLE_RECAPTCHA_SECRET || '6LdogRsUAAAAAE2YsMw0h65M0lXvytTgubAiLe1F',
         httpsPin:{
-            pin1: 'XXX',
-            pin2: 'XXX'
+            pin1: 'HNkuDDSYoxibVJ0bTCulHKegeK0TqoR8D7S9AmJ/a7M=',
+            pin2: 'HNkuDDSYoxibVJ0bTCulHKegeK0TqoR8D7S9AmJ/a7M='
         },
         mongoEncryption:{
             activated: true,
             // It can be defined only ONCE !!
             // Or you have to decrypt all the data before you change this
-            SecretKey: 'SuperSecretKey123!'
+            SecretKey: 'PdU2vusedclOAV8rQr/tsiUgrIsh6KhWHU9pi9Xa12g='
         }
     },
     port: process.env.PORT || 3000,
@@ -34,7 +34,7 @@ module.exports = {
         secure: false
     },
     // sessionSecret should be changed for security measures and concerns
-    sessionSecret: process.env.SESSION_SECRET || 'CHANGETHISTOSOMETHINGSECURE',
+    sessionSecret: process.env.SESSION_SECRET || 'lKC7B+BopgsYJlGeSlOFUWWE4dSxtHNbdVaxdpH2LMA=',
     // sessionKey is set to the generic sessionId key used by PHP applications
     // for obsecurity reasons
     sessionKey: 'sessionId',
