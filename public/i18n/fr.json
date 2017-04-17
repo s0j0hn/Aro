@@ -1,0 +1,16 @@
+{
+  "dashboard": {
+    "WELCOME": "Bienvenu chez {{appName}}"
+  },
+  "topbar": {
+    "search": {
+      "PLACEHOLDER": "Tapez ici ..."
+    }
+  },
+  "sidebar": {
+    "WELCOME": "Bienvenu"
+  },
+  "menu":{
+    "RECRUIMENT": "Recrutement"
+  }
+}

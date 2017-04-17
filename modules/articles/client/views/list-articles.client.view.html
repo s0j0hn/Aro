@@ -1,0 +1,26 @@
+<div ng-controller="ArticlesController" ng-init="find()">
+  <div class="panel panel-default">
+    <div ng-repeat="article in articles" ui-sref="app.articles.view({articleId: article._id})" class="panel-heading">
+      <div class="bb">
+        <h2 class="text-lg">{{article.title}}</h2>
+        <p class="clearfix">
+                  <span class="pull-left">
+                     <small class="mr-sm">
+                       By <a ng-class="{'text-danger' : article.user.roles.indexOf('admin') >= 0 }" ui-sref="app.profile.user({userId: article.user._id})" ng-bind="article.user.username"></a>
+
+                     </small>
+                     <small class="mr-sm">{{article.created | date: 'dd/MM/yy HH:mm'}}</small>
+                  </span>
+        </p>
+      </div>
+      <div class="panel-body">
+        <div ng-model="article.content" ta-bind="article.content"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="alert alert-warning text-center" ng-if="articles.$resolved && !articles.length">
+    No articles yet, why don't you <a ui-sref="app.articles.create">create one</a>?
+  </div>
+</div>
