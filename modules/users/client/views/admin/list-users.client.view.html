@@ -49,7 +49,7 @@ items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.curr
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="user in vm.users" ui-sref="app.admin.user({userId: user._id})" >
+        <tr ng-repeat="user in vm.users">
           <!--<td>{{user._id}}</td>-->
           <td class="text-center">{{user.username}}</td>
           <td ><div class="media">
@@ -66,6 +66,9 @@ items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.curr
           <td>{{user.created | date: 'HH:mm dd/MM/yy'}}</td>
           <td>
             <button class="btn btn-sm btn-danger" ng-click="vm.banUser(user)">BAN</button>
+            <button class="btn btn-sm btn-primary" ui-sref="app.admin.user-edit({userId: vm.user._id})">
+              EDIT
+            </button>
           </td>
           <td>
             <div class="checkbox c-checkbox">

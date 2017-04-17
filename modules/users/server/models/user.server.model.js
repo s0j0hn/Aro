@@ -165,7 +165,7 @@ var UserSchema = new Schema({
 if (config.app.mongoEncryption.activated){
     UserSchema.plugin(encrypt, {
         secret:config.app.mongoEncryption.SecretKey,
-        excludeFromEncryption: ['roles'],
+        excludeFromEncryption: ['roles','resetPasswordToken','resetPasswordExpires'],
         //additionalAuthenticatedFields: ['roles']
     });
 }
