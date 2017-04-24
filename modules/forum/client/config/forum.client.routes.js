@@ -12,7 +12,10 @@
             .state('app.forum', {
                 abstract: true,
                 url: '/forum',
-                template: '<ui-view/>'
+                template: '<ui-view/>',
+                data:{
+                    roles: ['user', 'team', 'admin']
+                }
             })
             .state('app.forum.sections', {
                 abstract: true,
@@ -125,6 +128,7 @@
                     replyResolve: newReply
                 },
                 data: {
+                    roles: ['user', 'team', 'admin'],
                     pageTitle: 'Reply {{ topicResolve.name }}'
                 }
             })

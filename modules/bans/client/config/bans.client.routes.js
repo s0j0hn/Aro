@@ -20,7 +20,8 @@
                 controller: 'BansListController',
                 controllerAs: 'vm',
                 data: {
-                    pageTitle: 'Bans List'
+                    pageTitle: 'Bans List',
+                    roles: ['admin']
                 },
                 resolve: helper.resolveFor('datatables')
             })
@@ -33,7 +34,7 @@
                     banResolve: newBan
                 },
                 data: {
-                    roles: ['user', 'admin'],
+                    roles: ['admin'],
                     pageTitle: 'Bans Create'
                 }
             })
@@ -46,7 +47,7 @@
                     banResolve: getBan
                 },
                 data: {
-                    roles: ['user', 'admin'],
+                    roles: ['admin'],
                     pageTitle: 'Edit Ban {{ banResolve.name }}'
                 }
             });
