@@ -2,7 +2,10 @@
 var ipaddr = require('ipaddr.js'),
     iplib = require('ip'),
     mongoose = require('mongoose'),
-    Ban = mongoose.model('Ban');
+    validator = require('validator'),
+    Ban = mongoose.model('Ban'),
+    path = require('path'),
+    config = require(path.resolve('./config/config'));
 
 function getIP(req) {
     var ipString = (req.headers['X-Forwarded-For'] ||
@@ -30,6 +33,28 @@ exports.renderIndex = function (req, res) {
     var ip = getIP(req);
     var banned = false;
 
+    var safeUserObject = null;
+    if (req.user) {
+        safeUserObject = {
+            displayName: validator.escape(req.user.displayName),
+            provider: validator.escape(req.user.provider),
+            username: validator.escape(req.user.username),
+            created: req.user.created.toString(),
+            roles: req.user.roles,
+            rank : req.user.rank,
+            posts : req.user.posts,
+            warnings: req.user.warnings,
+            ip_address: req.user.ip_address,
+            replys: req.user.replys,
+            views: req.user.views,
+            profileImageURL: req.user.profileImageURL,
+            email: validator.escape(req.user.email),
+            lastName: validator.escape(req.user.lastName),
+            firstName: validator.escape(req.user.firstName),
+            additionalProvidersData: req.user.additionalProvidersData
+        };
+    }
+
     Ban.find().sort('created').exec(function(err, bans) {
         for (var i = 0; i < bans.length; i++) {
             var ban = bans[i];
@@ -43,7 +68,8 @@ exports.renderIndex = function (req, res) {
             });
         } else {
             res.render('modules/core/server/views/index', {
-                user: req.user || null
+                user: JSON.stringify(safeUserObject),
+                sharedConfig: JSON.stringify(config.shared)
             });
         }
     });

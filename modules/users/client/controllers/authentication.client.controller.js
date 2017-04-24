@@ -5,9 +5,9 @@
         .module('app.users')
         .controller('AuthenticationController', AuthenticationController);
 
-    AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$location', '$window', 'Authentication', 'PasswordValidator'];
+    AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$window', 'Authentication', 'PasswordValidator'];
 
-    function AuthenticationController($scope, $state, UsersService, $location, $window, Authentication, PasswordValidator) {
+    function AuthenticationController($scope, $state, UsersService, $window, Authentication, PasswordValidator) {
         var vm = this;
 
         vm.authentication = Authentication;

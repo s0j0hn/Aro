@@ -80,7 +80,7 @@ module.exports = {
             }
         }
     },
-    livereload: true,
+    livereload: false,
     seedDB: {
         seed: process.env.MONGO_SEED === 'true' ? true : false,
         options: {
@@ -110,7 +110,7 @@ module.exports = {
             image: {
                 dest: './modules/users/client/img/profile/uploads/',
                 limits: {
-                    fileSize: 2 * 1024 * 1024 // Max file size in bytes (1 MB)
+                    fileSize: 2 * 1024 * 1024 // Max file size in bytes (2 MB)
                 }
             }
         }

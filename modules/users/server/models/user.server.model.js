@@ -90,6 +90,9 @@ var UserSchema = new Schema({
     loginTokenExpires:{
         type: Date
     },
+    loginToken:{
+        type: String
+    },
     password: {
         type: String,
         default: ''

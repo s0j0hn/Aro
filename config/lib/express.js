@@ -141,10 +141,10 @@ module.exports.initHelmetHeaders = function (app) {
   // Use helmet to secure Express headers
   var SIX_MONTHS = 15778476000;
   var ninetyDaysInSeconds = 7776000;
-  app.use(helmet.hpkp({
-    maxAge: ninetyDaysInSeconds,
-      sha256s: [config.app.httpsPin.pin1, config.app.httpsPin.pin2]
-    }));
+  // app.use(helmet.hpkp({
+  //   maxAge: ninetyDaysInSeconds,
+  //     sha256s: [config.app.httpsPin.pin1, config.app.httpsPin.pin2]
+  //   }));
   app.use(helmet.dnsPrefetchControl());
   app.use(helmet.frameguard());
   //app.use(helmet.noCache());

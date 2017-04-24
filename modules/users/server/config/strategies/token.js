@@ -30,16 +30,15 @@ module.exports = function () {
                         message: 'Unknown user or invalid password'
                     });
                 }
-                if (!user || !user.authenticate(password)) {
+                if (!user || !user.authenticate(password, { session: false, scope: [] })) {
                     return done(null, false, {
                         message: 'Invalid username or password (' + (new Date()).toLocaleTimeString() + ')'
                     });
                 }
-
                 // generate login token
                 // add token and exp date to user object
                 user.loginTokenExpires = Date.now() + (8 * (60 * 60 * 1000)) * 2;
-                user.loginToken = jwt.encode(user, 'Test123456');
+
 
 
                 // save user object to update database
@@ -47,6 +46,10 @@ module.exports = function () {
                     if(err){
                         done(err);
                     } else {
+                        user.loginToken = jwt.encode({
+                            loginTokenExpires: Date.now() + (8 * (60 * 60 * 1000)) * 2,
+                            roles: user.roles
+                        }, 'Test123456');
                         done(null, user);
                     }
                 });

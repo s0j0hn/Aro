@@ -11,8 +11,6 @@ var validateAddress = function(address) {
     return (address && addressRegex.test(address));
 };
 
-
-
 /**
  * Ban Schema
  */

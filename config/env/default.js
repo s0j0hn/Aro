@@ -13,7 +13,7 @@ module.exports = {
             pin2: 'HNkuDDSYoxibVJ0bTCulHKegeK0TqoR8D7S9AmJ/a7M='
         },
         mongoEncryption:{
-            activated: true,
+            activated: false,
             // It can be defined only ONCE !!
             // Or you have to decrypt all the data before you change this
             SecretKey: 'PdU2vusedclOAV8rQr/tsiUgrIsh6KhWHU9pi9Xa12g='

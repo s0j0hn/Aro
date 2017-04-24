@@ -29,26 +29,31 @@ exports.invokeRolesPolicies = function () {
  * Check If Bans Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
-    var token = req.header('loginToken') ? token: false;
-
-    if (token) {
-        jwt.verify(token, 'Test123456', function (err, decoded) {
-            if (err || decoded === undefined) {
-                req.user = null;
-            } else {
-                req.user = decoded;
-            }
-
-        });
-    }
-    // if (user !== undefined || user !== null){
-    //     var decodedUser = jwt.decode(user, 'Test123456');
-    //     if (decodedUser._id){
-    //         req.user = decodedUser;
-    //     }
-    // }
-
+    var token;
     var roles = (req.user) ? req.user.roles : ['guest'];
+
+    if (req.headers.authorization) {
+        var parts = req.headers.authorization.split(' ');
+        if (parts.length === 2) {
+            var scheme = parts[0],
+                credentials = parts[1];
+
+            if (/^Bearer$/i.test(scheme)) {
+                token = credentials;
+            }
+        } else {
+            return res.status(401).send('Format is Authorization: Bearer [token]');
+        }
+    } else if (req.params.token) {
+        token = req.params.token;
+        var decodedUser = jwt.decode(token, 'Test123456');
+        if (decodedUser._id){
+            req.user = decodedUser;
+            roles = req.user.roles;
+        }
+        // We delete the token from param to not mess with blueprints
+        delete req.query.token;
+    }
 
     // If an Ban is being processed and the current user created it then allow any manipulation
     if (req.ban && req.user && req.ban.user && req.ban.user.id === req.user.id) {

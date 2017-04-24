@@ -84,7 +84,7 @@ exports.signup = function (req, res) {
     // Then save the user
     user.save(function (err) {
         if (err) {
-            return res.status(422).send({
+            res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
@@ -106,7 +106,7 @@ exports.signup = function (req, res) {
  * Signin-token after passport token authentication
  */
 exports.tokenAuth = function (req, res, next) {
-    passport.authenticate('local-token', function(err, user, info) {
+    passport.authenticate('local-token',{ session: false, scope: [] }, function(err, user, info) {
         if (err || !user) {
             res.status(400).send(info);
         } else {
@@ -130,81 +130,64 @@ exports.signin = function (req, res, next) {
     var ip = getIP(req);
     var banned = false;
 
-    Ban.find().sort('created').exec(function(err, bans) {
-        for (var i = 0; i < bans.length; i++) {
-            //var ban = bans[i];
-            //for (var j = 0; j < req.user.ip_address.length; j++){
-            if ( iplib.cidrSubnet(bans[i].address).contains(ip)){
-                banned = true;
-            }
-            //}
-        }
-    });
     passport.authenticate('local', function (err, user, info) {
-        if (banned || err || !user) {
-            if (banned){
-                res.status(422).send({
-                    message: 'Your IP address is BANNED or using VPN/Proxy'
-                });
-            } else if (err) {
-                res.status(423).send(info);
-            }
-
-        } else if(user.roles.indexOf('banned') >= 0) {
-            banned = true;
+        if (err || !user) {
+            res.status(422).send(info);
+        } else if(user.roles.indexOf('banned') >= 0 || banned) {
+            res.status(400).send({
+                message: 'Your IP address is BANNED or using VPN/Proxy'
+            });
         } else {
             // Remove sensitive data before login
             user.password = undefined;
             user.salt = undefined;
 
+            User.findById(user._id, 'username roles created posts ip_address').exec(function (err, user) {
+                Ban.find().sort('created').exec(function(err, bans) {
+                    for (var i = 0; i < bans.length; i++) {
+                        for (var j = 0; j < user.ip_address.length; j++){
+                            if (iplib.cidrSubnet(bans[i].address).contains(user.ip_address[j])){
+                                banned = true;
+                            }
+                        }
+                    }
+                });
+                if (err) {
+                    res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                } else if (!user) {
+                    res.status(400).send({
+                        message: 'failed to load user'
+                    });
+                } else if (banned) {
+                    res.status(422).send({
+                        message: 'Your IP address is BANNED or using VPN/Proxy'
+                    });
+                }
+                for(var i = 0; i < user.ip_address.length + 1; i++){
+                    if (user.ip_address[i] === ip || user.ip_address.length >= 0){
+                        user.ip_address[i] = ip;
+                        break;
+                    } else {
+                        user.ip_address.push(ip);
+                        break;
+                    }
+                }
+                user.save(function (err) {
+                    if (err) {
+                        res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    }
+                });
+
+            });
+
             req.login(user, function (err) {
                 if (err) {
                     res.status(400).send(err);
                 } else {
-
-                    User.findById(user._id, 'username roles created posts ip_address').exec(function (err, user) {
-                        Ban.find().sort('created').exec(function(err, bans) {
-                            for (var i = 0; i < bans.length; i++) {
-                                for (var j = 0; j < user.ip_address.length; j++){
-                                    if (iplib.cidrSubnet(bans[i].address).contains(user.ip_address[j])){
-                                        banned = true;
-                                    }
-                                }
-                            }
-                        });
-                        if (err) {
-                            return res.status(400).send({
-                                message: errorHandler.getErrorMessage(err)
-                            });
-                        } else if (!user) {
-                            return res.status(400).send({
-                                message: 'failed to load user'
-                            });
-                        } else if (banned) {
-                            return res.status(422).send({
-                                message: 'Your IP address is BANNED or using VPN/Proxy'
-                            });
-                        }
-
-                        for(var i = 0; i < user.ip_address.length; i++){
-                            if (user.ip_address[i] === ip || user.ip_address.length >= 0){
-                                user.ip_address[i] = ip;
-                                break;
-                            } else {
-                                user.ip_address.push(ip);
-                                break;
-                            }
-                        }
-                        user.save(function (err) {
-                            if (err) {
-                                return res.status(400).send({
-                                    message: errorHandler.getErrorMessage(err)
-                                });
-                            }
-                        });
-
-                    });
-
                     res.json(user);
                 }
             });

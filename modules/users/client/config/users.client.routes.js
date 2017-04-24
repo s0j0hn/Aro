@@ -59,6 +59,7 @@ angular.module('app.users').config(['$stateProvider', 'RouteHelpersProvider',
                 templateUrl: '/modules/users/client/views/authentication/authentication.client.view.html',
                 controller: 'AuthenticationController',
                 controllerAs: 'vm',
+                resolve: helper.resolveFor('SweetAlert2')
             })
             .state('page.authentication.signup', {
                 url: '/signup',

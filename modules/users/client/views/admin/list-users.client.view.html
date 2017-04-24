@@ -66,7 +66,7 @@ items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.curr
           <td>{{user.created | date: 'HH:mm dd/MM/yy'}}</td>
           <td>
             <button class="btn btn-sm btn-danger" ng-click="vm.banUser(user)">BAN</button>
-            <button class="btn btn-sm btn-primary" ui-sref="app.admin.user-edit({userId: vm.user._id})">
+            <button class="btn btn-sm btn-primary" ui-sref="app.admin.user-edit({userId: user._id})">
               EDIT
             </button>
           </td>
