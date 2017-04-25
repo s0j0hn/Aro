@@ -50,7 +50,8 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$locatio
                 templateUrl: 'modules/core/client/views/403.client.view.html',
                 data: {
                     ignoreState: true
-                }
+                },
+                resolve: helper.resolveFor('icons')
             });
 
         //
