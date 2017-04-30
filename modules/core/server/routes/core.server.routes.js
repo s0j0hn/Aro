@@ -44,7 +44,7 @@ module.exports = function (app) {
     app.route('/:url(api|modules|lib)/*').get(core.renderNotFound);
 
     // Define application route
-    app.route('/*').get(core.renderIndex, Acl.middleware(), function(req, res, next){
+    app.route('/*', Acl.middleware(), function(req, res, next){
         var ip = getIP(req);
         Ban.find().sort('created').exec(function(err, bans) {
             if (err) {
@@ -64,5 +64,5 @@ module.exports = function (app) {
             }
 
         });
-    });
+    }).get(core.renderIndex);
 };
