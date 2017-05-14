@@ -8,6 +8,7 @@ angular.module('app.chat').run(['Menus',
             title: 'Chat',
             state: 'app.chat',
             iconClass: 'fa fa-weixin',
+            translate: 'sidebar.chat',
             type: 'item',
             roles: ['user','admin','team']
         });

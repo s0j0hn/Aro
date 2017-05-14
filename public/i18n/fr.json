@@ -8,11 +8,8 @@
     }
   },
   "sidebar": {
-    "WELCOME": "Bienvenu"
-  },
-  "menu":{
-    "RECRUIMENT": "Recrutement",
-    "ARTICLES": "Articles",
-    "CHAT": "Tchat"
+    "WELCOME": "Bienvenu",
+    "articles": "Articles",
+    "chat": "Tchat"
   }
 }

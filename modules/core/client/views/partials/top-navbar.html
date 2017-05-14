@@ -26,7 +26,7 @@
           <em class="fa fa-navicon"></em>
         </a>
       </li>
-      <li>
+      <li ng-show="authentication.user.username">
         <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops  ng-click="toggleUserBlock()"-->
         <a ui-sref="app.profile.user({userId: authentication.user._id})">
           <em class="icon-user"></em>
@@ -37,11 +37,11 @@
     <!-- START Right Navbar-->
     <ul class="nav navbar-nav navbar-right ml0">
       <!-- Search icon-->
-      <li>
-        <a search-open="">
-          <em class="icon-magnifier"></em>
-        </a>
-      </li>
+      <!--<li>-->
+        <!--<a search-open="">-->
+          <!--<em class="icon-magnifier"></em>-->
+        <!--</a>-->
+      <!--</li>-->
       <!-- START Offsidebar button-->
       <li>
         <a href="" ng-click="app.offsidebarOpen = !app.offsidebarOpen">
@@ -110,13 +110,13 @@
   </div>
   <!-- END Nav wrapper-->
   <!-- START Search form-->
-  <form role="search" action="search.html" class="navbar-form">
-    <div class="form-group has-feedback">
-      <input type="text" placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" class="form-control" />
-      <div search-dismiss="search-dismiss" class="fa fa-times form-control-feedback"></div>
-    </div>
-    <button type="submit" class="hidden btn btn-default">Submit</button>
-  </form>
+  <!--<form role="search" action="search.html" class="navbar-form">-->
+    <!--<div class="form-group has-feedback">-->
+      <!--<input type="text" placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" class="form-control" />-->
+      <!--<div search-dismiss="search-dismiss" class="fa fa-times form-control-feedback"></div>-->
+    <!--</div>-->
+    <!--<button type="submit" class="hidden btn btn-default">Submit</button>-->
+  <!--</form>-->
   <!-- END Search form-->
 </nav>
 <!-- END Top Navbar-->
