@@ -11,6 +11,8 @@
     "WELCOME": "Bienvenu"
   },
   "menu":{
-    "RECRUIMENT": "Recrutement"
+    "RECRUIMENT": "Recrutement",
+    "ARTICLES": "Articles",
+    "CHAT": "Tchat"
   }
 }

@@ -3,13 +3,10 @@
 /**
  * Module dependencies
  */
-var ipaddr = require('ipaddr.js'),
-    iplib = require('ip'),
-    path = require('path'),
+var path = require('path'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     mongoose = require('mongoose'),
     passport = require('passport'),
-    Ban = mongoose.model('Ban'),
     User = mongoose.model('User');
 
 // URLs for which user can't be redirected on signin
@@ -18,67 +15,16 @@ var noReturnUrls = [
     '/page/authentication/signup'
 ];
 
-
-function getIP(req) {
-    var ipString = (req.headers['X-Forwarded-For'] ||
-        req.headers['x-forwarded-for'] ||
-        '').split(',')[0] ||
-        req.connection.remoteAddress;
-
-    if (ipaddr.isValid(ipString)) {
-        try {
-            var addr = ipaddr.parse(ipString);
-            if (ipaddr.IPv6.isValid(ipString) && addr.isIPv4MappedAddress()) {
-                return addr.toIPv4Address().toString();
-            }
-            return addr.toNormalizedString();
-        } catch (e) {
-            return ipString;
-        }
-    }
-    return 'unknown';
-}
-
 /**
  * Signup
  */
 exports.signup = function (req, res) {
-    // we get the right ipv4 or ipv6 of user
-    var ip = getIP(req);
-    var banned = false;
-
-    Ban.find().sort('created').exec(function(err, bans) {
-        for (var i = 0; i < bans.length; i++) {
-            //var ban = bans[i];
-            //for (var j = 0; j < req.user.ip_address.length; j++){
-                if (iplib.cidrSubnet(bans[i].address).contains(ip)){
-                    banned = true;
-                }
-            //}
-        }
-    });
-
-    if (banned) {
-        res.status(422).send({
-            message: 'Your IP address is BANNED or using VPN/Proxy'
-        });
-    }
-
     // For security measurement we remove the roles from the req.body object
     delete req.body.roles;
 
     // Init user and add missing fields
     var user = new User(req.body);
     user.provider = 'local';
-
-    for(var i = 0; i < user.ip_address.length; i++){
-        if (user.ip_address[i] === ip || user.ip_address.length >= 0){
-            user.ip_address[i] = ip;
-        } else {
-            user.ip_address.push(ip);
-            break;
-        }
-    }
     user.displayName = user.firstName + ' ' + user.lastName;
 
     // Then save the user
@@ -127,13 +73,11 @@ exports.tokenAuth = function (req, res, next) {
  * Signin after passport authentication
  */
 exports.signin = function (req, res, next) {
-    var ip = getIP(req);
-    var banned = false;
 
     passport.authenticate('local', function (err, user, info) {
         if (err || !user) {
             res.status(422).send(info);
-        } else if(user.roles.indexOf('banned') >= 0 || banned) {
+        } else if(user.roles.indexOf('banned') >= 0) {
             res.status(400).send({
                 message: 'Your IP address is BANNED or using VPN/Proxy'
             });
@@ -143,15 +87,6 @@ exports.signin = function (req, res, next) {
             user.salt = undefined;
 
             User.findById(user._id, 'username roles created posts ip_address').exec(function (err, user) {
-                Ban.find().sort('created').exec(function(err, bans) {
-                    for (var i = 0; i < bans.length; i++) {
-                        for (var j = 0; j < user.ip_address.length; j++){
-                            if (iplib.cidrSubnet(bans[i].address).contains(user.ip_address[j])){
-                                banned = true;
-                            }
-                        }
-                    }
-                });
                 if (err) {
                     res.status(400).send({
                         message: errorHandler.getErrorMessage(err)
@@ -160,19 +95,6 @@ exports.signin = function (req, res, next) {
                     res.status(400).send({
                         message: 'failed to load user'
                     });
-                } else if (banned) {
-                    res.status(422).send({
-                        message: 'Your IP address is BANNED or using VPN/Proxy'
-                    });
-                }
-                for(var i = 0; i < user.ip_address.length + 1; i++){
-                    if (user.ip_address[i] === ip || user.ip_address.length >= 0){
-                        user.ip_address[i] = ip;
-                        break;
-                    } else {
-                        user.ip_address.push(ip);
-                        break;
-                    }
                 }
                 user.save(function (err) {
                     if (err) {
