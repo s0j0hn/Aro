@@ -3,8 +3,7 @@
 
     angular
         .module('app.translate')
-        .config(translateConfig)
-        ;
+        .config(translateConfig);
     translateConfig.$inject = ['$translateProvider'];
     function translateConfig($translateProvider){
 

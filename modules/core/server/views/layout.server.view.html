@@ -43,21 +43,13 @@
 
   <!--Embedding The User Object-->
   <script type="text/javascript">
-    var user = {{ user }};
-    var env = "{{ env }}";
+    var user = {{ user | json | safe }};
   </script>
-
   <!--Load The Socket.io File-->
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
   <!--Application JavaScript Files-->
   {% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
-
-  <!--owasp config sync-->
-  <script type="text/javascript">
-    var sharedConfig = {{ sharedConfig }};
-    owaspPasswordStrengthTest.config(sharedConfig.owasp);
-  </script>
 
   {% if livereload %}
   <!--Livereload script rendered -->

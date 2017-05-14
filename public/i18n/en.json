@@ -8,6 +8,8 @@
     }
   },
   "sidebar": {
-    "WELCOME": "Welcome"
+    "WELCOME": "Welcome",
+    "articles": "Articles",
+    "chat": "Chat"
   }
 }
