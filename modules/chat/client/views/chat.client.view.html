@@ -1,29 +1,147 @@
-<!-- The chat view -->
-<section class="container" ng-controller="ChatController">
-  <div class="page-header">
-    <h1>Chat Example</h1>
+ <!--The chat view-->
+<!--<section class="container" ng-controller="ChatController">-->
+  <!--<div class="page-header">-->
+    <!--<h1>Chat Example</h1>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; The message form &ndash;&gt;-->
+  <!--<form class="col-xs-12 col-md-offset-4 col-md-4" ng-submit="sendMessage();">-->
+    <!--<fieldset class="row">-->
+      <!--<div class="input-group">-->
+        <!--<input type="text" id="messageText" name="messageText" class="form-control" ng-model="messageText" placeholder="Enter new message">-->
+        <!--<span class="input-group-btn">-->
+          <!--<button type="submit" class="btn btn-primary" ng-disabled="!messageText.length">Submit</button>-->
+        <!--</span>-->
+      <!--</div>-->
+    <!--</fieldset>-->
+  <!--</form>-->
+  <!--<ul class="list-unstyled">-->
+    <!--&lt;!&ndash; List all messages &ndash;&gt;-->
+    <!--<li class="col-xs-12 col-md-offset-4 col-md-4 chat-message" ng-repeat="message in messages">-->
+      <!--<small class="pull-right text-muted" ng-bind="message.created | date:'dd/MM hh:mm'"></small>-->
+      <!--<img ng-src="{{message.profileImageURL}}" alt="{{message.username}}" class="pull-left chat-profile-image" />-->
+      <!--<div class="pull-left chat-message-details">-->
+        <!--<strong ng-class="{'text-danger' : authentication.user.roles.indexOf('admin') >= 0, 'text-success' : authentication.user.roles.indexOf('team') >= 0 }" ng-bind="message.username"></strong>-->
+        <!--<br>-->
+        <!--<span ng-bind="message.text"></span>-->
+      <!--</div>-->
+    <!--</li>-->
+  <!--</ul>-->
+<!--</section>-->
+<div ng-controller="ChatController" class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="row chats-row">
+        <div class="col-md-12">
+          <a href="#" class="list-group-item open-request">
+            <p>Name:  Matthew Townsen</p>
+            <p>Email:  mtownsen@teamsupport.com</p>
+            <p>Time:  2:47 PM</p>
+            <p>Message:  It's all broken</p>
+            <button class="btn btn-default">Accept</button>
+          </a>
+        </div>
+        <div class="col-md-12">
+          <ul class="dropdown-menu media-list">
+            <li>
+              <ul class="list-group" id="scroller">
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+                <li>
+                  <a href="#" class="list-group-item">Channel 1</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9 current-chat">
+      <div class="row chat-toolbar-row">
+        <div class="col-sm-12">
+          <div class="btn-group chat-toolbar" role="group" aria-label="...">
+            <button id="chat-leave" class="btn btn-default ticket-option" type="button">
+              <i class="glyphicon glyphicon-remove-sign"></i> Leave Chat
+            </button>
+            <button id="chat-invite" class="btn btn-default ticket-option" type="button">
+              <i class="glyphicon glyphicon-plus"></i> Invite
+            </button>
+            <button id="chat-customer" class="btn btn-default ticket-option" type="button">
+              <i class="glyphicon glyphicon-user"></i> Open Customer
+            </button>
+            <button id="chat-create-ticket" class="btn btn-default ticket-option" type="button">
+              <i class="glyphicon glyphicon-pencil"></i> Create Ticket
+            </button>
+            <button id="chat-add-ticket" class="btn btn-default ticket-option" type="button">
+              <i class="glyphicon glyphicon-plus"></i> Add to Ticket
+            </button>
+            <button id="chat-open-ticket" class="btn btn-default ticket-option" type="button">
+              <i class="glyphicon glyphicon-open"></i> Open Ticket
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row current-chat-area">
+        <div class="col-md-12">
+          <ul class="media-list">
+            <li ng-repeat="message in messages | orderBy: 'created'" class="media">
+              <div class="media-body">
+                <div class="media">
+                  <a class="pull-left" href="#">
+                    <img class="chat-profile-image img-circle thumb64" ng-src="{{message.profileImageURL}}" alt="{{message.username}}">
+                  </a>
+                  <strong ng-class="{'text-danger' : authentication.user.roles.indexOf('admin') >= 0, 'text-success' : authentication.user.roles.indexOf('team') >= 0 }" ng-bind="message.username"></strong>
+                  <br>
+                  <div ng-bind="message.text" class="media-body">
+
+                  </div>
+                  <small ng-bind="message.created | date:'dd/MM HH:mm'" class="text-muted pull-right"></small>
+                  <hr>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <form class="col-xs-12" ng-submit="sendMessage();">
+          <fieldset class="row">
+            <div class="input-group">
+              <input type="text" id="messageText" name="messageText" class="form-control" ng-model="messageText" placeholder="Enter new message">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" ng-disabled="!messageText.length">Submit</button>
+              </span>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
   </div>
-  <!-- The message form -->
-  <form class="col-xs-12 col-md-offset-4 col-md-4" ng-submit="sendMessage();">
-    <fieldset class="row">
-      <div class="input-group">
-        <input type="text" id="messageText" name="messageText" class="form-control" ng-model="messageText" placeholder="Enter new message">
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-primary" ng-disabled="!messageText.length">Submit</button>
-        </span>
-      </div>
-    </fieldset>
-  </form>
-  <ul class="list-unstyled">
-    <!-- List all messages -->
-    <li class="col-xs-12 col-md-offset-4 col-md-4 chat-message" ng-repeat="message in messages">
-      <small class="pull-right text-muted" ng-bind="message.created | date:'dd/MM hh:mm'"></small>
-      <img ng-src="{{message.profileImageURL}}" alt="{{message.username}}" class="pull-left chat-profile-image" />
-      <div class="pull-left chat-message-details">
-        <strong ng-class="{'text-danger' : authentication.user.roles.indexOf('admin') >= 0, 'text-success' : authentication.user.roles.indexOf('team') >= 0 }" ng-bind="message.username"></strong>
-        <br>
-        <span ng-bind="message.text"></span>
-      </div>
-    </li>
-  </ul>
-</section>
+</div>
