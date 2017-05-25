@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function () {
   // Init module configuration options
   var applicationModuleName = 'mean';
   var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', 'ui.utils', 'angularFileUpload',
-    'ngRoute','ngStorage','ngTouch','ngCookies','pascalprecht.translate', 'oc.lazyLoad', 'cfp.loadingBar','ngSanitize','tmh.dynamicLocale','textAngular','vcRecaptcha'
+    'ngRoute','ngStorage','ngTouch','ngCookies','pascalprecht.translate', 'oc.lazyLoad', 'cfp.loadingBar','ngSanitize','tmh.dynamicLocale','textAngular','vcRecaptcha','ngEmbed'
   ];
 
   // Add a new vertical module

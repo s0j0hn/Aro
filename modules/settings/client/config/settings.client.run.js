@@ -9,20 +9,6 @@
 
     function settingsRun($rootScope, $localStorage){
 
-
-      // User Settings
-      // -----------------------------------
-      $rootScope.user = {
-        name:     'John',
-        job:      'ng-developer',
-        picture:  'img/user/02.jpg'
-      };
-
-      // Hides/show user avatar on sidebar from any element
-      $rootScope.toggleUserBlock = function(){
-        $rootScope.$broadcast('toggleUserBlock');
-      };
-
       // Global Settings
       // -----------------------------------
       $rootScope.app = {

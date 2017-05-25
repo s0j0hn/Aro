@@ -27,7 +27,7 @@
             'ko': 'Korean',
             'zh': 'Chinese'};
 
-          $rootScope.model = {selectedLocale: 'en'};
+          $rootScope.model = {selectedLocale: 'fr'};
 
           $rootScope.$locale = $locale;
 

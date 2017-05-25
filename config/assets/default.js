@@ -6,6 +6,7 @@ module.exports = {
             css: [
                 // 'public/lib/bootstrap/dist/css/bootstrap.css',
                 // 'public/lib/bootstrap/dist/css/bootstrap-theme.css'
+                'public/lib/ngEmbed/dist/ng-embed.min.css'
             ],
             js: [
                 'public/lib/jquery/dist/jquery.js',
@@ -51,7 +52,8 @@ module.exports = {
                 'public/lib/rangy/rangy-selectionsaverestore.js',
                 'public/lib/textAngular/dist/textAngular-sanitize.min.js',
                 'public/lib/ngWig/dist/ng-wig.min.js',
-                'public/lib/angular-recaptcha/release/angular-recaptcha.js'
+                'public/lib/angular-recaptcha/release/angular-recaptcha.js',
+                'public/lib/ngEmbed/dist/ng-embed.min.js'
             ],
             tests: ['public/lib/angular-mocks/angular-mocks.js']
         },

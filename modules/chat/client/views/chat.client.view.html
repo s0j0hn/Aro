@@ -114,17 +114,19 @@
             <li ng-repeat="message in messages | orderBy: 'created'" class="media">
               <div class="media-body">
                 <div class="media">
-                  <a class="pull-left" href="#">
+                  <a class="pull-left" ui-sref="app.profile.user({userId: message.user._id})">
                     <img class="chat-profile-image img-circle thumb64" ng-src="{{message.profileImageURL}}" alt="{{message.username}}">
                   </a>
                   <strong ng-class="{'text-danger' : authentication.user.roles.indexOf('admin') >= 0, 'text-success' : authentication.user.roles.indexOf('team') >= 0 }" ng-bind="message.username"></strong>
                   <br>
-                  <div ng-bind="message.text" class="media-body">
+                  <div ng-bind-html="message.text | embed" class="media-body">
 
                   </div>
-                  <small ng-bind="message.created | date:'dd/MM HH:mm'" class="text-muted pull-right"></small>
-                  <hr>
-                </div>
+                  <div ng-if="isValid(message.text)" ng-init="neImageLong = false" ng-class="{false:'ne-image', true:'ne-image ne-image-long'}[neImageLong]">
+                    <div class="ne-image-wrapper">
+                      <img ng-src="{{message.text}}" ng-click="neImageLong=!neImageLong" alt=""/>
+                    </div>
+                  </div>
               </div>
             </li>
           </ul>
