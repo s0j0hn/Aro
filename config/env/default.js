@@ -2,9 +2,9 @@
 
 module.exports = {
     app: {
-        AppTitle: '404gaming',
-        AppDescription: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-        keywords: 'mongodb, express, angularjs, node.js, mongoose, passport',
+        AppTitle: 'Aro',
+        AppDescription: 'AngularJs Web Chat with Ora',
+        keywords: 'c, express, angularjs, node.js, sql',
         googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'UA-96461510-1',
         googleRecaptchaPublic: process.env.GOOGLE_RECAPTCHA_PUBLIC || '6LdogRsUAAAAAOZgwgIXB7QTPdjRNgkrOXP2WH0c',
         googleRecaptchaSecret: process.env.GOOGLE_RECAPTCHA_SECRET || '6LdogRsUAAAAAE2YsMw0h65M0lXvytTgubAiLe1F',

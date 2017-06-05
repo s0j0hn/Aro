@@ -21,7 +21,7 @@
 
 
 .current-chat {
-  height: 100vh;
+  height: 0vh;
   border: 1px solid #ddd;
 }
 

@@ -16,7 +16,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$locatio
         $locationProvider.html5Mode(false);
 
         // default route
-        $urlRouterProvider.otherwise('/articles');
+        $urlRouterProvider.otherwise('/home');
 
         // Home state routing
         $stateProvider
@@ -26,10 +26,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$locatio
                 templateUrl: 'modules/core/client/views/core.client.view.html',
                 resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'slimscroll', 'classyloader', 'whirl','SweetAlert2')
             })
-            // .state('app.home', {
-            //   url: '/home',
-            //   templateUrl: 'modules/core/client/views/home.client.view.html'
-            // })
+            .state('app.home', {
+              url: '/home',
+              templateUrl: 'modules/core/client/views/home.client.view.html'
+            })
             .state('page.not-found', {
                 url: '/not-found',
                 templateUrl: 'modules/core/client/views/404.client.view.html',

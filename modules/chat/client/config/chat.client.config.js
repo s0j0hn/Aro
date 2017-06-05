@@ -6,11 +6,20 @@ angular.module('app.chat').run(['Menus',
         // Add the app.chat dropdown item
         Menus.addMenuItem('sidebar', {
             title: 'Chat',
-            state: 'app.chat',
+            state: 'app.chat.view',
             iconClass: 'fa fa-weixin',
             translate: 'sidebar.chat',
             type: 'item',
-            roles: ['user','admin','team']
+            roles: ['user','admin']
         });
+        Menus.addMenuItem('sidebar', {
+            title: 'Channels',
+            state: 'app.chat.channels',
+            type: 'item',
+            iconClass: 'icon-cup',
+            position: 9,
+            roles: ['user','admin']
+        });
+
     }
 ]);

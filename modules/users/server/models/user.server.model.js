@@ -112,6 +112,10 @@ var UserSchema = new Schema({
         enum:['Administrator','Team Member','Senior User','Junior User','Banned'],
         default: 'Junior User'
     },
+    channels: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Channel'
+    }],
     views: {
         type: Number,
         default: 0
