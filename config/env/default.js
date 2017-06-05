@@ -19,7 +19,7 @@ module.exports = {
             SecretKey: 'PdU2vusedclOAV8rQr/tsiUgrIsh6KhWHU9pi9Xa12g='
         }
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3001,
     templateEngine: 'swig',
     // Session Cookie settings
     sessionCookie: {
