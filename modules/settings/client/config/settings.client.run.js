@@ -12,8 +12,8 @@
       // Global Settings
       // -----------------------------------
       $rootScope.app = {
-        name: '404gaming',
-        description: '404gaming portal',
+        name: 'Aro',
+        description: 'Aro Tchat',
         year: ((new Date()).getFullYear()),
         layout: {
           isFixed: true,

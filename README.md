@@ -80,40 +80,6 @@ To install Node.js dependencies you're going to use npm again. In the applicatio
 $ npm install
 ```
 
-This command does a few things:
-* First it will install the dependencies needed for the application to run.
-* If you're running in a development environment, it will then also install development dependencies needed for testing and running your application.
-* Finally, when the install process is over, npm will initiate a bower install command to install all the front-end modules needed for the application
-
-### Running with User Seed
-To have default account(s) seeded at runtime:
-
-In Development:
-```bash
-MONGO_SEED=true grunt
-```
-It will try to seed the users 'user' and 'admin'. If one of the user already exists, it will display an error message on the console. Just grab the passwords from the console.
-
-In Production:
-```bash
-MONGO_SEED=true grunt prod
-```
-This will seed the admin user one time if the user does not already exist. You have to copy the password from the console and save it.
-
-### Running with TLS (SSL)
-Application will start by default with secure configuration (SSL mode) turned on and listen on port 8443.
-To run your application in a secure manner you'll need to use OpenSSL and generate a set of self-signed certificates. Unix-based users can use the following command:
-
-```bash
-$ sh ./scripts/generate-ssl-certs.sh
-```
-
-Windows users can follow instructions found [here](http://www.websense.com/support/article/kbarticle/How-to-use-OpenSSL-and-Microsoft-Certification-Authority).
-After you've generated the key and certificate, place them in the *config/sslcerts* folder.
-
-Finally, execute grunt's prod task `grunt prod`
-* enable/disable SSL mode in production environment change the `secure` option in `config/env/production.js`
-
 ## Running your application with Gulp
 
 After the install process, you can easily run your project with:
@@ -144,109 +110,8 @@ To run your application with *production* environment configuration, execute gul
 $ gulp prod
 ```
 
-### Testing Your Application with Gulp
-Using the full test suite included with MEAN.JS with the test task:
-
-### Run all tests
-```bash
-$ gulp test
-```
-
-### Run server tests
-```bash
-gulp test:server
-```
-
-### Run client tests
-```bash
-gulp test:client
-```
-
-### Run e2e tests
-```bash
-gulp test:e2e
-```
-
-## Development and deployment With Docker
-
-* Install [Docker](https://docs.docker.com/installation/#installation)
-* Install [Compose](https://docs.docker.com/compose/install/)
-
-* Local development and testing with compose:
-```bash
-$ docker-compose up
-```
-
-* Local development and testing with just Docker:
-```bash
-$ docker build -t mean .
-$ docker run -p 27017:27017 -d --name db mongo
-$ docker run -p 3000:3000 --link db:db_1 mean
-$
-```
-
-* To enable live reload, forward port 35729 and mount /app and /public as volumes:
-```bash
-$ docker run -p 3000:3000 -p 35729:35729 -v /Users/mdl/workspace/mean-stack/mean/public:/home/mean/public -v /Users/mdl/workspace/mean-stack/mean/app:/home/mean/app --link db:db_1 mean
-```
-
-## Getting Started With MEAN.JS
-You have your application running, but there is a lot of stuff to understand. We recommend you go over the [Official Documentation](http://meanjs.org/docs.html).
-In the docs we'll try to explain both general concepts of MEAN components and give you some guidelines to help you improve your development process. We tried covering as many aspects as possible, and will keep it updated by your request. You can also help us develop and improve the documentation by checking out the *gh-pages* branch of this repository.
-
-## Community
-* Use the [Official Website](http://meanjs.org) to learn about changes and the roadmap.
-* Join #meanjs on freenode.
-* Discuss it in the new [Google Group](https://groups.google.com/d/forum/meanjs)
-* Ping us on [Twitter](http://twitter.com/meanjsorg) and [Facebook](http://facebook.com/meanjs)
-
 ## Contributing
 We welcome pull requests from the community! Just be sure to read the [contributing](https://github.com/meanjs/mean/blob/master/CONTRIBUTING.md) doc to get started.
-
-## Deploying To Cloud Foundry
-
-Cloud Foundry is an open source platform-as-a-service (PaaS).  The MEANJS project
-can easily be deployed to any Cloud Foundry instance.  The easiest way to deploy the
-MEANJS project to Cloud Foundry is to use a public hosted instance.  The two most popular
-instances are [Pivotal Web Services](https://run.pivotal.io/) and
-[IBM Bluemix](https://bluemix.net).  Both provide free trials and support pay-as-you-go models
-for hosting applications in the cloud.  After you have an account follow the below steps to deploy MEANJS.
-
-* Install the [Cloud Foundry command line tools](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html).
-* Now you need to log into Cloud Foundry from the Cloud Foundry command line.
-  *  If you are using Pivotal Web Services run `$ cf login -a api.run.pivotal.io`.
-  *  If you are using IBM Bluemix run `$ cf login -a api.ng.bluemix.net`.
-* Create a Mongo DB service.
-+  *  If you are using Pivotal Web Services run `$ cf create-service mongolab sandbox mean-mongo`
-+  *  If you are using IBM Bluemix run `$ cf create-service mongodb 100 mean-mongo`
-* Clone the GitHub repo for MEANJS if you have not already done so
-  * `$ git clone https://github.com/meanjs/mean.git && cd mean`
-* Run `$ npm install`
-* Run the Grunt Build task to build the optimized JavaScript and CSS files
-  * `$ grunt build`
-* Deploy MEANJS to Cloud Foundry
-  * `$ cf push`
-
-After `cf push` completes you will see the URL to your running MEANJS application 
-(your URL will be different).
-
-    requested state: started
-    instances: 1/1
-    usage: 128M x 1 instances
-    urls: mean-humbler-frappa.mybluemix.net
-
-Open your browser and go to that URL and your should see your MEANJS app running!
-
-###  Deploying MEANJS To IBM Bluemix
-IBM Bluemix is a Cloud Foundry based PaaS.  By clicking the button below you can signup for Bluemix and deploy
-a working copy of MEANJS to the cloud without having to do the steps above.
-
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https%3A%2F%2Fgithub.com%2Fmeanjs%2Fmean)
-
-After the deployment is finished you will be left with a copy of the MEANJS code in your own private Git repo
-in Bluemix complete with a pre-configured build and deploy pipeline.  Just clone the Git repo, make your changes, and
-commit them back.  Once your changes are committed, the build and deploy pipeline will run automatically deploying
-your changes to Bluemix.
 
 ## Credits
 Inspired by the great work of [Madhusudhan Srinivasa](https://github.com/madhums/)
