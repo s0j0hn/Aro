@@ -95,7 +95,6 @@ gulp.task('jshint', function () {
     .pipe(plugins.jshint.reporter('default'))
     .pipe(plugins.jshint.reporter('fail'));
 });
-
 // ESLint JS linting task
 gulp.task('eslint', function () {
   var assets = _.union(

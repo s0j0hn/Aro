@@ -8,7 +8,6 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
             return isImgLink.test(text);
         };
 
-
         $scope.authentication = Authentication;
         // Create a messages array
         $scope.messages = [];
@@ -41,10 +40,10 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
         Socket.on('userLeft', function (message) {
             $scope.messages.unshift(message);
         });
-
-        Socket.on('userJoined', function (message) {
-            $scope.messages.unshift(message);
-        });
+        //
+        // Socket.on('userJoined', function (message) {
+        //     $scope.messages.unshift(message);
+        // });
 
         // Create a controller method for sending messages
         $scope.sendMessage = function () {
@@ -62,18 +61,19 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
         };
 
         $scope.quitRoom = function (channel) {
-            $scope.actualChannel = channel;
+            $scope.actualChannel = '';
             Socket.emit('quitRoom', {
                 room: channel.name,
             });
         };
 
         $scope.joinRoom = function (channel) {
-            $scope.actualChannel = channel;
-            Socket.emit('joinRoom', {
-                room: channel.name,
-            });
-
+            if(channel !== $scope.actualChannel){
+                $scope.actualChannel = channel;
+                Socket.emit('joinRoom', {
+                    room: channel.name,
+                });
+            }
         };
 
         // Remove the event listener when the controller instance is destroyed

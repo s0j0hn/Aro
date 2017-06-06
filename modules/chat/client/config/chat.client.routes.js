@@ -7,22 +7,28 @@ angular.module('app.chat').config(['$stateProvider',
             .state('app.chat', {
                 abstract: true,
                 url: '/chat',
-                template: '<ui-view/>'
+                template: '<ui-view/>',
+                data: {
+                    roles: ['user', 'admin']
+                }
             })
             .state('app.chat.view', {
                 url: '/view',
                 templateUrl: 'modules/chat/client/views/chat.client.view.html',
                 controller: 'ChatController',
                 data: {
-                    roles: ['user', 'team', 'admin']
-                },
+                    roles: ['user', 'admin']
+                }
 
             })
             .state('app.chat.channels', {
                 url: '/channels',
                 title: 'Channels',
                 // controller: 'ChannelsController',
-                templateUrl: 'modules/chat/client/views/list-channels.client.view.html'
+                templateUrl: 'modules/chat/client/views/list-channels.client.view.html',
+                data: {
+                    roles: ['user', 'admin']
+                }
             });
         
         getChannel.$inject = ['$stateParams', 'ChannelsService'];
