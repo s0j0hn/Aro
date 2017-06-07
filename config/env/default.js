@@ -4,7 +4,7 @@ module.exports = {
     app: {
         AppTitle: 'Aro',
         AppDescription: 'AngularJs Web Chat with Ora',
-        keywords: 'c, express, angularjs, node.js, sql',
+        keywords: 'express, angularjs, node.js',
         googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'UA-96461510-1',
         googleRecaptchaPublic: process.env.GOOGLE_RECAPTCHA_PUBLIC || '6LdogRsUAAAAAOZgwgIXB7QTPdjRNgkrOXP2WH0c',
         googleRecaptchaSecret: process.env.GOOGLE_RECAPTCHA_SECRET || '6LdogRsUAAAAAE2YsMw0h65M0lXvytTgubAiLe1F',
@@ -39,7 +39,7 @@ module.exports = {
     // for obsecurity reasons
     sessionKey: 'sessionId',
     sessionCollection: 'sessions',
-    logo: 'public/img/brand/logo.png',
+    logo: 'modules/preloader/client/img/preloader.full.png',
     favicon: 'public/img/brand/favicon.ico',
     illegalUsernames: ['meanjs', 'administrator', 'password', 'admin', 'user',
         'unknown', 'anonymous', 'null', 'undefined', 'api','404team','support','404'

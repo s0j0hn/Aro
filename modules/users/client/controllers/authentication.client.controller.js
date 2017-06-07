@@ -14,6 +14,7 @@
         vm.getPopoverMsg = PasswordValidator.getPopoverMsg;
         vm.signup = signup;
         vm.signin = signin;
+        vm.logout = logout;
         vm.usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
         vm.setWidgetId = setWidgetId;
         vm.setResponse = setResponse;
@@ -58,8 +59,8 @@
 
             vm.credentials = {
                 user: {
-                    name: vm.credentials.username,
-                    password: vm.credentials.password,
+                    username: vm.credentials.username,
+                    password: vm.credentials.password.toUpperCase(),
                     email: vm.credentials.email
                 }
             };
@@ -77,20 +78,17 @@
                 return false;
             }
 
-
-            // $http({
-            //     method: 'GET',
-            //     url: 'http://localhost:3434/users/'+ vm.credentials.username+'/'+sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(vm.credentials.password)),
-            // }).then(function successCallback(response) {
-            //
-            // }, function errorCallback(response) {
-            //     swal('Error', response.data.status.description, 'error');
-            // });
-
             UsersService.userSignin({username: vm.credentials.username,
-                password: sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(vm.credentials.password))})
+                password: (sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(vm.credentials.password))).toUpperCase()})
                 .then(onUserSigninSuccess)
                 .catch(onUserSigninError);
+        }
+
+        function logout() {
+
+            UsersService.logout()
+                .then(onLogoutSuccess)
+                .catch(onLogoutSuccess);
         }
 
         // Authentication Callbacks
@@ -116,14 +114,25 @@
             vm.authentication.user.profileImageURL = 'modules/users/client/img/profile/default.png';
             // $localStorage.set('user', response.data);
             vm.authentication.user.roles = ['user'];
-            //Notification.info({ message: 'Welcome ' + response.firstName });
-            // And redirect to the previous or app.articles.list page
+
+            // And redirect to the previous or app.home page
             $state.go($state.previous.state.name || 'app.home', $state.previous.params);
             swal('Success', 'Welcome  ' + response.data.name, 'success');
         }
 
         function onUserSigninError(response) {
             //Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Signin Error!', delay: 6000 });
+            swal('Error', response.data.status.description, 'error');
+        }
+
+        function onLogoutSuccess(response) {
+
+            // And redirect to the previous or app.home page
+            $state.go($state.previous.state.name || 'app.home', $state.previous.params);
+            swal('Success', 'Welcome  ' + response.data.name, 'success');
+        }
+
+        function onLogoutError(response) {
             swal('Error', response.data.status.description, 'error');
         }
     }

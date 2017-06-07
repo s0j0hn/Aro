@@ -9,8 +9,12 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
         };
 
         $scope.authentication = Authentication;
+        $scope.textToBold = function (path) {
+            return path.replace("/","<b>/</b>");
+        };
         // Create a messages array
         $scope.messages = [];
+        $scope.usersConnected = Socket.connected;
         $scope.channels = [];
         $scope.userChannels = $scope.authentication.user.channels;
         $scope.actualChannel = '';
@@ -19,6 +23,15 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
         // Make sure the Socket is connected
         if (!Socket.socket) {
             Socket.connect();
+            var user = {
+                token: $scope.authentication.user.token,
+                username: $scope.authentication.user.username,
+                password: $scope.authentication.user.password,
+                profileImageURL: $scope.authentication.user.profileImageURL
+            };
+
+            // Emit a 'chatMessage' message event
+            Socket.emit('newMessage', user);
         }
 
         Socket.on('setup', function (data) {
@@ -74,6 +87,11 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
             $scope.actualChannel = '';
             Socket.emit('quitRoom', {
                 room: channel.name,
+                user: {
+                    token: $scope.authentication.user.token,
+                    username: $scope.authentication.user.username,
+                    password: $scope.authentication.user.password
+                }
             });
         };
 

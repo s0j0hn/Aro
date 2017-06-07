@@ -10,7 +10,7 @@
 
     function UsersService($resource, Authentication) {
         var user = {};
-        var local = 'http://localhost\\:3434';
+        var local = 'https://localhost\\:3434';
         if (Authentication.user){
             user = Authentication.user;
         }
@@ -18,7 +18,38 @@
             update: {
                 method: 'PUT',
                 header:{
-                    'Auth': user.token
+                    'Auth': user.token,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            },
+            getInvitaions:{
+                method: 'GET',
+                url: local + '/users/conversations/invitations',
+                header: {
+                    'Auth': user.token,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                params:{
+                    username: '@username'
+                }
+            },
+            getcontacts:{
+                method: 'GET',
+                url: local + '/user/contacts',
+                header: {
+                    'Auth': user.token,
+                },
+
+            },
+            addcontacts:{
+                method: 'POST',
+                url: local + '/users/:username/contacts',
+                header: {
+                    'Auth': user.token,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                params:{
+                    username: '@username'
                 }
             },
             updatePassword: {
@@ -28,11 +59,13 @@
             signup: {
                 method: 'POST',
                 url: local + '/users',
-
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             },
             signin: {
                 method: 'GET',
-                url: 'http://localhost\\:3434/users/:username/:password',
+                url: 'https://localhost\\:3434/users/:username/:password',
                 params:{
                     username: '@username', password: '@password'
                 },
@@ -49,26 +82,12 @@
             },
             userSignin: function (credentials) {
                 return this.signin(credentials).$promise;
+            },
+            addContacts: function (users) {
+                return this.addcontacts(users).$promise;
             }
         });
 
         return Users;
     }
-
-
-    // angular
-    //     .module('app.users.admin.services')
-    //     .factory('AdminService', AdminService);
-    //
-    // AdminService.$inject = ['$resource'];
-    //
-    // function AdminService($resource) {
-    //     return $resource('/api/users/:userId', {
-    //         userId: '@_id'
-    //     }, {
-    //         update: {
-    //             method: 'PUT'
-    //         }
-    //     });
-    // }
 }());

@@ -20,6 +20,14 @@ angular.module('app.chat').run(['Menus',
             position: 9,
             roles: ['user','admin']
         });
+        Menus.addMenuItem('sidebar', {
+            title: 'Home',
+            state: 'app.home',
+            type: 'item',
+            iconClass: 'icon-cup',
+            position: 2,
+            roles: ['*']
+        });
 
     }
 ]);

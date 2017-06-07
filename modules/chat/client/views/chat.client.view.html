@@ -89,9 +89,11 @@
                 <div class="media-body">
                   <div class="media">
                     <a class="pull-left" ui-sref="app.profile.user({userId: message.user._id})">
-                      <img class="chat-profile-image img-circle thumb64" ng-src="{{message.profileImageURL}}" alt="{{message.username}}">
+                      <img class="chat-profile-image img-circle thumb64" ng-src="{{message.profileImageURL}}" alt="{{message.username}}"></a>
                     </a>
-                    <strong ng-class="{'text-danger' : authentication.user.roles.indexOf('admin') >= 0, 'text-success' : authentication.user.roles.indexOf('team') >= 0 }" ng-bind="message.username"></strong>
+                    <strong ng-class="{'text-danger' : authentication.user.roles.indexOf('admin') >= 0, 'text-success' : authentication.user.roles.indexOf('team') >= 0 }" ng-bind="message.username">
+                      <p class="pull-right">{{message.created | date: 'HH:mm dd/MM'}}</p>
+                    </strong>
                     <br>
                     <div ng-bind-html="message.text | embed" class="media-body">
 
@@ -109,9 +111,9 @@
 
 
       </div>
-      <div class="row">
+      <div>
         <form ng-submit="sendMessage();">
-          <fieldset class="row">
+          <fieldset>
             <div class="input-group">
               <input type="text" id="messageText" name="messageText" class="form-control" ng-model="messageText" placeholder="Enter new message">
               <span class="input-group-btn">
