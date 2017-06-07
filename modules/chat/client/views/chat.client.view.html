@@ -32,7 +32,7 @@
     <div class="row chat-toolbar-row">
       <div class="col-sm-12">
         <div class="btn-group chat-toolbar" role="group" aria-label="...">
-          <button id="chat-leave" ng-click="quitRoom(actualChannel.name)" class="btn btn-default ticket-option" type="button">
+          <button id="chat-leave" ng-click="quitRoom(actualChannel)" class="btn btn-default ticket-option" type="button">
             <i class="glyphicon glyphicon-remove-sign"></i> Leave Chat
           </button>
           <button id="chat-invite" class="btn btn-default ticket-option" type="button">
@@ -107,18 +107,19 @@
           </div>
         </div>
 
-        <div class="row">
-          <form ng-submit="sendMessage();">
-            <fieldset class="row">
-              <div class="input-group">
-                <input type="text" id="messageText" name="messageText" class="form-control" ng-model="messageText" placeholder="Enter new message">
-                <span class="input-group-btn">
+
+      </div>
+      <div class="row">
+        <form ng-submit="sendMessage();">
+          <fieldset class="row">
+            <div class="input-group">
+              <input type="text" id="messageText" name="messageText" class="form-control" ng-model="messageText" placeholder="Enter new message">
+              <span class="input-group-btn">
                 <button type="submit" class="btn btn-primary" ng-disabled="!messageText.length">Submit</button>
               </span>
-              </div>
-            </fieldset>
-          </form>
-        </div>
+            </div>
+          </fieldset>
+        </form>
       </div>
     </div>
   </div>

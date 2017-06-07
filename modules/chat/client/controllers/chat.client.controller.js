@@ -24,7 +24,12 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
         Socket.on('setup', function (data) {
             $scope.channels = data.rooms;
             Socket.emit('joinRoom', {
-                room: data.rooms[0].name
+                room: data.rooms[0].name,
+                user: {
+                    token: $scope.authentication.user.token,
+                    username: $scope.authentication.user.username,
+                    password: $scope.authentication.user.password
+                }
             });
             $scope.actualChannel = data.rooms[0];
 
@@ -50,7 +55,12 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
             // Create a new message object
             var message = {
                 text: this.messageText,
-                room: $scope.actualChannel.name
+                room: $scope.actualChannel.name,
+                user: {
+                    token: $scope.authentication.user.token,
+                    username: $scope.authentication.user.username,
+                    profileImageURL: $scope.authentication.user.profileImageURL
+                }
             };
 
             // Emit a 'chatMessage' message event
@@ -72,6 +82,11 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
                 $scope.actualChannel = channel;
                 Socket.emit('joinRoom', {
                     room: channel.name,
+                    user: {
+                        token: $scope.authentication.user.token,
+                        username: $scope.authentication.user.username,
+                        password: $scope.authentication.user.password
+                    }
                 });
             }
         };
@@ -79,6 +94,7 @@ angular.module('app.chat').controller('ChatController', ['$scope','Menus', '$loc
         // Remove the event listener when the controller instance is destroyed
         $scope.$on('$destroy', function () {
             Socket.removeListener('newMessage');
+            Socket.emit('disconected', $scope.authentication.username);
         });
     }
 ]);

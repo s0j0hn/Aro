@@ -26,8 +26,8 @@ module.exports = function (io, socket) {
             text: 'left this Channel',
             room: data.room,
             created: Date.now(),
-            profileImageURL: socket.request.user.profileImageURL,
-            username: socket.request.user.username
+            profileImageURL: data.user.profileImageURL,
+            username: data.user.username
         });
     });
 
@@ -38,8 +38,8 @@ module.exports = function (io, socket) {
             text: 'just joined',
             room: data.room,
             created: Date.now(),
-            profileImageURL: socket.request.user.profileImageURL,
-            username: socket.request.user.username
+            profileImageURL: data.user.profileImageURL,
+            username: data.user.username
         });
 
     });
@@ -47,8 +47,8 @@ module.exports = function (io, socket) {
     socket.on('newMessage', function (message) {
         message.type = 'message';
         message.created = Date.now();
-        message.profileImageURL = socket.request.user.profileImageURL;
-        message.username = socket.request.user.username;
+        message.profileImageURL = message.user.profileImageURL;
+        message.username = message.user.username;
 
         // Emit the 'chatMessage' event
         io.in(message.room).emit('newMessage', message);
@@ -56,13 +56,13 @@ module.exports = function (io, socket) {
 
 
     // Emit the status event when a socket client is disconnected
-    socket.on('disconnect', function () {
+    socket.on('disconnect', function (username) {
         io.in(rooms).emit('newMessage', {
             type: 'status',
             room: defaultRoom,
             text: 'disconnected',
             created: Date.now(),
-            username: socket.request.user.username
+            username: username
         });
     });
 };

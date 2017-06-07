@@ -5,16 +5,15 @@
         .module('app.users')
         .controller('AuthenticationController', AuthenticationController);
 
-    AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$window', 'Authentication', 'PasswordValidator','$log'];
+    AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$window', 'Authentication', 'PasswordValidator','$log','$http','$localStorage'];
 
-    function AuthenticationController($scope, $state, UsersService, $window, Authentication, PasswordValidator, $log, $crypto) {
+    function AuthenticationController($scope, $state, UsersService, $window, Authentication, PasswordValidator, $log, $http, $localStorage) {
         var vm = this;
 
         vm.authentication = Authentication;
         vm.getPopoverMsg = PasswordValidator.getPopoverMsg;
         vm.signup = signup;
         vm.signin = signin;
-        vm.callOauthProvider = callOauthProvider;
         vm.usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
         vm.setWidgetId = setWidgetId;
         vm.setResponse = setResponse;
@@ -53,8 +52,17 @@
                 return false;
             }
 
+            //hash the password before send
             vm.credentials.password = sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(vm.credentials.password));
             $log.debug(vm.credentials.password);
+
+            vm.credentials = {
+                user: {
+                    name: vm.credentials.username,
+                    password: vm.credentials.password,
+                    email: vm.credentials.email
+                }
+            };
 
             UsersService.userSignup(vm.credentials)
                 .then(onUserSignupSuccess)
@@ -69,19 +77,20 @@
                 return false;
             }
 
-            UsersService.userSignin(vm.credentials)
+
+            // $http({
+            //     method: 'GET',
+            //     url: 'http://localhost:3434/users/'+ vm.credentials.username+'/'+sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(vm.credentials.password)),
+            // }).then(function successCallback(response) {
+            //
+            // }, function errorCallback(response) {
+            //     swal('Error', response.data.status.description, 'error');
+            // });
+
+            UsersService.userSignin({username: vm.credentials.username,
+                password: sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(vm.credentials.password))})
                 .then(onUserSigninSuccess)
                 .catch(onUserSigninError);
-        }
-
-        // OAuth provider request
-        function callOauthProvider(url) {
-            if ($state.previous && $state.previous.href) {
-                url += '?redirect_to=' + encodeURIComponent($state.previous.href);
-            }
-
-            // Effectively call OAuth authentication route:
-            $window.location.href = url;
         }
 
         // Authentication Callbacks
@@ -92,26 +101,30 @@
             //Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Signup successful!' });
             // And redirect to the previous or app.articles.list page
             $state.go($state.previous.state.name || 'page.authentication.signin', $state.previous.params);
-            swal('Success', 'Inscription : ' + response.username, ' avec success');
+            swal('Success', 'Inscription : ' + response.data.name, ' avec success');
         }
 
         function onUserSignupError(response) {
             //Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Signup Error!', delay: 6000 });
-            swal('Error', response.data.message, 'error');
+            swal('Error', response.data.status.description, 'error');
         }
 
         function onUserSigninSuccess(response) {
             // If successful we assign the response to the global user model
-            vm.authentication.user = response;
+            vm.authentication.user = response.data;
+            vm.authentication.user.username = response.data.name;
+            vm.authentication.user.profileImageURL = 'modules/users/client/img/profile/default.png';
+            // $localStorage.set('user', response.data);
+            vm.authentication.user.roles = ['user'];
             //Notification.info({ message: 'Welcome ' + response.firstName });
             // And redirect to the previous or app.articles.list page
             $state.go($state.previous.state.name || 'app.home', $state.previous.params);
-            swal('Success', 'Welcome  ' + response.username, 'success');
+            swal('Success', 'Welcome  ' + response.data.name, 'success');
         }
 
         function onUserSigninError(response) {
             //Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Signin Error!', delay: 6000 });
-            swal('Error', response.data.message, 'error');
+            swal('Error', response.data.status.description, 'error');
         }
     }
 }());
