@@ -38,7 +38,7 @@ module.exports = {
     },
     facebook: {
         clientID: process.env.FACEBOOK_ID || '158287341361467',
-        clientSecret: process.env.FACEBOOK_SECRET || '5c464537bec9a6442276b4f24139db3f',
+        clientSecret: process.env.FACEBOOK_SECRET || '2276b4f24139db3f',
         callbackURL: '/api/auth/facebook/callback'
     },
     twitter: {
@@ -53,12 +53,12 @@ module.exports = {
     },
     linkedin: {
         clientID: process.env.LINKEDIN_ID || '771fzuw16vnnch',
-        clientSecret: process.env.LINKEDIN_SECRET || 'T5E1DrwFw9t1lz0q',
+        clientSecret: process.env.LINKEDIN_SECRET || 'T5E1D1lz0q',
         callbackURL: '/api/auth/linkedin/callback'
     },
     github: {
         clientID: process.env.GITHUB_ID || 'f88edfa061a93df71ec4',
-        clientSecret: process.env.GITHUB_SECRET || 'b2fa65c9a157bb56be976ed44583693f4f6082c2',
+        clientSecret: process.env.GITHUB_SECRET || '4583693f4f6082c2',
         callbackURL: '/api/auth/github/callback'
     },
     stripe: {
@@ -78,7 +78,7 @@ module.exports = {
             service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
             auth: {
                 user: process.env.MAILER_EMAIL_ID || 'noreply404gaming@gmail.com',
-                pass: process.env.MAILER_PASSWORD || '4o4gaming'
+                pass: process.env.MAILER_PASSWORD || ''
             }
         }
     },
