@@ -51,7 +51,6 @@ module.exports = {
                 'public/lib/rangy/rangy-core.js',
                 'public/lib/rangy/rangy-selectionsaverestore.js',
                 'public/lib/ngWig/dist/ng-wig.min.js',
-                'public/lib/angular-recaptcha/release/angular-recaptcha.js',
                 'public/lib/ngEmbed/dist/ng-embed.min.js',
                 'public/lib/angular-scroll-glue/src/scrollglue.js',
 

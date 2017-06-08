@@ -4,14 +4,14 @@
 angular.module('app.chat').controller('ChatController',
     ['$scope','Menus', '$location', 'Authentication', 'Socket','ConversationsService','UsersService','$filter','$sce','$state',
     function ($scope, Menus, $location, Authentication, Socket, ConversationsService, UsersService, $filter, $sce, $state) {
-        $scope.isValid = function(text){
-          var isImgLink = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
-            return isImgLink.test(text);
-        };
-
+        $scope.authentication = Authentication;
+        if (!$scope.authentication.user) {
+            $state.go('app.home');
+        }
 
         $scope.getconversations = getconversations;
-        $scope.authentication = Authentication;
+        $scope.actualChannel = { id: 1, name: 'General'};
+        setup();
         $scope.messages = [];
         $scope.usersConnected = Socket.connected;
         $scope.channels = [{ id: 1, name: 'General'},{ id: 2, name: 'Staff'}];
@@ -21,17 +21,18 @@ angular.module('app.chat').controller('ChatController',
             {id: 3, username:'Quentin', status: 'absent', room: 'General'},
             {id: 4, username:'Victor', status: 'online', room: 'Staff'}
         ];
-        $scope.actualChannel = { id: 1, name: 'General'};
+
         $scope.socketClient = {};
+
+        $scope.isValid = function(text){
+            var isImgLink = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
+            return isImgLink.test(text);
+        };
+
         $scope.trustedHtml = function (plainText) {
             return $sce.trustAsHtml(plainText);
         };
 
-        if ($scope.authentication.user) {
-            $state.go('app.home');
-        }
-
-        setup();
         function getconversations() {
             UsersService.getconversations()
                 .then()
@@ -42,7 +43,6 @@ angular.module('app.chat').controller('ChatController',
         if (!Socket.socket) {
             Socket.connect();
         }
-
 
         function setup() {
             Socket.emit('getSetup', {
@@ -95,12 +95,10 @@ angular.module('app.chat').controller('ChatController',
             this.messageText = '';
         };
 
+        // Send socket to quit room
         $scope.quitRoom = function (channel) {
             $scope.actualChannel = '';
-            var index = $scope.channels.map(function (item) {
-                return item.id;
-            }).indexOf(channel.id);
-            $scope.channels.splice(index, 1);
+            $scope.channels.pop();
             Socket.emit('quitRoom', {
                 room: channel.name,
                 user: {
@@ -112,6 +110,7 @@ angular.module('app.chat').controller('ChatController',
             });
         };
 
+        // Send socket to join room
         $scope.joinRoom = function (channel) {
             if(channel !== $scope.actualChannel){
                 $scope.actualChannel = channel;

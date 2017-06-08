@@ -53,23 +53,5 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$locatio
                 },
                 resolve: helper.resolveFor('icons')
             });
-
-        //
-        // CUSTOM RESOLVES
-        //   Add your own resolves properties
-        //   following this object extend
-        //   method
-        // -----------------------------------
-        // .state('app.someroute', {
-        //   url: '/some_url',
-        //   templateUrl: 'path_to_template.html',
-        //   controller: 'someController',
-        //   resolve: angular.extend(
-        //     helper.resolveFor(), {
-        //     // YOUR RESOLVES GO HERE
-        //     }
-        //   )
-        // })
-
     }
 ]);
