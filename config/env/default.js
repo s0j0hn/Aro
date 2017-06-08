@@ -5,18 +5,18 @@ module.exports = {
         AppTitle: 'Aro',
         AppDescription: 'AngularJs Web Chat with Ora',
         keywords: 'express, angularjs, node.js',
-        googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'UA-96461510-1',
-        googleRecaptchaPublic: process.env.GOOGLE_RECAPTCHA_PUBLIC || '6LdogRsUAAAAAOZgwgIXB7QTPdjRNgkrOXP2WH0c',
-        googleRecaptchaSecret: process.env.GOOGLE_RECAPTCHA_SECRET || '6LdogRsUAAAAAE2YsMw0h65M0lXvytTgubAiLe1F',
+        googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'UA-',
+        googleRecaptchaPublic: process.env.GOOGLE_RECAPTCHA_PUBLIC || '6L',
+        googleRecaptchaSecret: process.env.GOOGLE_RECAPTCHA_SECRET || '6L',
         httpsPin:{
-            pin1: 'HNkuDDSYoxibVJ0bTCulHKegeK0TqoR8D7S9AmJ/a7M=',
-            pin2: 'HNkuDDSYoxibVJ0bTCulHKegeK0TqoR8D7S9AmJ/a7M='
+            pin1: 'HN',
+            pin2: 'HN'
         },
         mongoEncryption:{
             activated: false,
             // It can be defined only ONCE !!
             // Or you have to decrypt all the data before you change this
-            SecretKey: 'PdU2vusedclOAV8rQr/tsiUgrIsh6KhWHU9pi9Xa12g='
+            SecretKey: 'PdU2vusedclOAV8rQr'
         }
     },
     port: process.env.PORT || 3001,
@@ -34,7 +34,7 @@ module.exports = {
         secure: false
     },
     // sessionSecret should be changed for security measures and concerns
-    sessionSecret: process.env.SESSION_SECRET || 'lKC7B+BopgsYJlGeSlOFUWWE4dSxtHNbdVaxdpH2LMA=',
+    sessionSecret: process.env.SESSION_SECRET || 'lKC7B+BopgsYJlGeSlOFU',
     // sessionKey is set to the generic sessionId key used by PHP applications
     // for obsecurity reasons
     sessionKey: 'sessionId',

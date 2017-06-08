@@ -2,21 +2,34 @@
 
 // Create the 'app.chat' controller
 angular.module('app.chat').controller('ChatController',
-    ['$scope','Menus', '$location', 'Authentication', 'Socket','ConversationsService','UsersService','$filter',
-    function ($scope, Menus, $location, Authentication, Socket, ConversationsService, UsersService, $filter) {
+    ['$scope','Menus', '$location', 'Authentication', 'Socket','ConversationsService','UsersService','$filter','$sce','$state',
+    function ($scope, Menus, $location, Authentication, Socket, ConversationsService, UsersService, $filter, $sce, $state) {
         $scope.isValid = function(text){
           var isImgLink = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
             return isImgLink.test(text);
         };
+
 
         $scope.getconversations = getconversations;
         $scope.authentication = Authentication;
         $scope.messages = [];
         $scope.usersConnected = Socket.connected;
         $scope.channels = [{ id: 1, name: 'General'},{ id: 2, name: 'Staff'}];
-        $scope.userChannels = $scope.authentication.user.channels;
-        $scope.actualChannel = $scope.channels[0];
+        $scope.usersChannel = [
+            {id: 1, username:'Jan', status: 'online', room: 'General'},
+            {id: 2, username:'Julien', status: 'offline', room: 'Staff'},
+            {id: 3, username:'Quentin', status: 'absent', room: 'General'},
+            {id: 4, username:'Victor', status: 'online', room: 'Staff'}
+        ];
+        $scope.actualChannel = { id: 1, name: 'General'};
         $scope.socketClient = {};
+        $scope.trustedHtml = function (plainText) {
+            return $sce.trustAsHtml(plainText);
+        };
+
+        if ($scope.authentication.user) {
+            $state.go('app.home');
+        }
 
         setup();
         function getconversations() {
@@ -31,11 +44,9 @@ angular.module('app.chat').controller('ChatController',
         }
 
 
-
         function setup() {
-
             Socket.emit('getSetup', {
-                room: $scope.channels[0],
+                room: $scope.actualChannel.name,
                 user: {
                     token: $scope.authentication.user.token,
                     username: $scope.authentication.user.username,
@@ -49,7 +60,11 @@ angular.module('app.chat').controller('ChatController',
         });
 
         Socket.on('clientInfo', function (data) {
-            $scope.socketClient = data;
+            $scope.socketClient.ip = data.ip;
+        });
+
+        Socket.on('clients', function (data) {
+            $scope.socketClients = data.clients;
         });
 
         Socket.on('userLeft', function (message) {

@@ -3,6 +3,24 @@
 // Create the chat configuration
 module.exports = function (io, socket) {
 
+    function getClientsInRoom(socketId, room) {
+        var socketIds = io.sockets.adapter.rooms[room];
+        var clients = [];
+
+        if (socketIds && socketIds.length > 0) {
+
+            for (var i = 0, len = socketIds.length; i < len; i++) {
+                // check if the socket is not the requesting
+                // socket
+                if (socketIds.sockets[i] !== socketId) {
+                    clients.push([Object.keys(socketIds.sockets)[i]]);
+                }
+            }
+        }
+
+        return clients;
+    }
+
     socket.on('userKicked', function(data) {
         socket.leave(data.room);
         io.in(data.room).emit('userLeft', {
@@ -15,9 +33,6 @@ module.exports = function (io, socket) {
         });
     });
 
-    socket.on('getClients', function (data) {
-        var clients = io.sockets.clients(data.room);
-    });
 
     socket.on('quitRoom', function(data) {
         socket.leave(data.room);
@@ -33,6 +48,7 @@ module.exports = function (io, socket) {
 
     socket.on('getSetup', function(data) {
         socket.join(data.room);
+        var clients = getClientsInRoom(io, data.romm);
         io.in(data.room).emit('userJoined', {
             type: 'status',
             text: 'just joined',
@@ -44,6 +60,9 @@ module.exports = function (io, socket) {
         socket.emit('clientInfo',{
             ip: socket.request.connection.remoteAddress
 
+        });
+        socket.emit('clients',{
+            clients: clients
         });
     });
 

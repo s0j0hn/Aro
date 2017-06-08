@@ -51,12 +51,7 @@ module.exports = {
                 'public/lib/ngWig/dist/ng-wig.min.js',
                 'public/lib/angular-recaptcha/release/angular-recaptcha.js',
                 'public/lib/ngEmbed/dist/ng-embed.min.js',
-                'public/lib/angular-scroll-glue/src/scrollglue.js',
-                'public/lib/ng-emoji-picker/js/nanoscroller.min.js',
-                'public/lib/ng-emoji-picker/js/jquery.emojiarea.js',
-                'public/lib/ng-emoji-picker/js/config.js',
-                'public/lib/ng-emoji-picker/js/util.js',
-                'public/lib/ng-emoji-picker/js/emoji-picker.js'
+                'public/lib/angular-scroll-glue/src/scrollglue.js'
             ],
             tests: ['public/lib/angular-mocks/angular-mocks.js']
         },

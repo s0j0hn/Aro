@@ -54,8 +54,7 @@
     "ng-file-upload": "^12.1.0",
     "angular-local-storage": "^0.6.0",
     "highlightjs": "^9.11.0",
-    "angular-scroll-glue": "^2.2.0",
-    "ng-emoji-picker": "^0.13.2"
+    "angular-scroll-glue": "^2.2.0"
   },
   "resolutions": {
     "angular-ui-utils": "3.0.0",

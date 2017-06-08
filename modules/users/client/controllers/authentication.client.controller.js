@@ -83,11 +83,13 @@
 
         function logout() {
 
-            $localStorage.clear();
-            $window.$localStorage.clear();
-            UsersService.logOut()
-                .then(onLogoutSuccess)
-                .catch(onLogoutSuccess);
+            $localStorage.$reset();
+            $scope.authentication = null;
+            // And redirect to the previous or app.home page
+            $state.go($state.previous.state.name || 'app.home', $state.previous.params);
+            // UsersService.logOut()
+            //     .then(onLogoutSuccess)
+            //     .catch(onLogoutSuccess);
         }
 
         // Authentication Callbacks
@@ -128,8 +130,6 @@
         function onLogoutSuccess(response) {
 
             $localStorage.$reset();
-            $localStorage.clear();
-            $window.$localStorage.clear();
             // And redirect to the previous or app.home page
             $state.go($state.previous.state.name || 'app.home', $state.previous.params);
             swal('Success', 'Welcome  ' + response.data.name, 'success');

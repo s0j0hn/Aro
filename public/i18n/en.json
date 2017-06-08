@@ -16,11 +16,17 @@
       "leave": "Leave",
       "addmoderator": "Add Moderator",
       "addchannel": "Add Channel",
-      "removeuser": "Delete User"
+      "removeuser": "Delete User",
+      "channels": "Channels"
 
     },
     "usersin": "Users",
-    "placeholder": "Your message here"
+    "placeholder": "Your message here",
+    "signin": "Signin",
+    "signup": "Signup",
+    "changepassword":"Change Password",
+    "editprofile": "Edit Profile",
+    "signout": "Logout"
 
   }
 }

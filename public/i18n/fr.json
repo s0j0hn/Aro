@@ -15,11 +15,17 @@
       "leave": "Quitter",
       "addmoderator": "Ajouter Moderateur",
       "addchannel": "Ajouter Conversation",
-      "removeuser": "Supprimer Utilisateur"
+      "removeuser": "Supprimer Utilisateur",
+      "channels": "Conversations"
 
     },
-    "usersin": "Utilisateurs",
-    "placeholder": "Tapez Ici"
+    "usersin": "Utilisateurs dans ",
+    "placeholder": "Tapez Ici",
+    "signin": "S'Identifier",
+    "signup": "S'enregistrer",
+    "changepassword":"Changer mot de passe",
+    "editprofile": "Editer son profil",
+    "signout": "Logout"
 
   }
 }

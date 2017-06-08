@@ -7,7 +7,6 @@ angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfig
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider', '$httpProvider',
   function ($locationProvider, $httpProvider) {
     $locationProvider.html5Mode(true).hashPrefix('!');
-      $httpProvider.defaults.headers.auth = 'vy4eUCqpQmGoeWsnHKwCQw';
     $httpProvider.interceptors.push('authInterceptor');
     //$httpProvider.interceptors.push('tokenHttpRequestInterceptor');
   }

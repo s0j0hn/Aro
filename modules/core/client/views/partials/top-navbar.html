@@ -44,7 +44,7 @@
       <!--</li>-->
       <!-- START Offsidebar button-->
       <li>
-        <a href="" ng-click="app.offsidebarOpen = !app.offsidebarOpen">
+        <a ng-if="authentication.user" ng-click="app.offsidebarOpen = !app.offsidebarOpen">
           <em class="icon-notebook"></em>
         </a>
       </li>
@@ -82,25 +82,25 @@
         </a>
         <ul class="dropdown-menu">
           <li>
-            <a ui-sref="app.settings.profile">Edit Profile</a>
+            <a ui-sref="app.settings.profile">{{ 'chat.editprofile' | translate}}</a>
           </li>
-          <li ng-show="authentication.user.provider === 'local'">
-            <a ui-sref="app.settings.password">Change Password</a>
+          <li>
+            <a ui-sref="app.settings.password">{{ 'chat.changepassword' | translate}}</a>
           </li>
           <li class="divider"></li>
           <li ng-controller="AuthenticationController as vm">
-            <a ng-click="vm.logout" >Signout</a>
+            <a ng-click="vm.logout()" >{{ 'chat.signout' | translate}}</a>
           </li>
         </ul>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right ml0 mr0" data-ng-hide="authentication.user.username">
       <li>
-        <a ui-sref="page.authentication.signup">Sign Up</a>
+        <a ui-sref="page.authentication.signup">{{ 'chat.signup' | translate}}</a>
       </li>
       <li class="divider-vertical"></li>
       <li>
-        <a ui-sref="page.authentication.signin">Sign In</a>
+        <a ui-sref="page.authentication.signin">{{ 'chat.signin' | translate}}</a>
       </li>
     </ul>
     <!-- END Right Navbar-->
