@@ -9,11 +9,8 @@
     ConversationsService.$inject = ['$resource', 'Authentication'];
 
     function ConversationsService($resource, Authentication) {
-        var user = {};
+        var user = Authentication.user;
         var local = 'https://localhost\\:3434';
-        if (Authentication.user){
-            user = Authentication.user;
-        }
         var Conversations = $resource(local+'/conversations', {}, {
             update: {
                 method: 'POST',

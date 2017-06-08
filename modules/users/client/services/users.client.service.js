@@ -9,25 +9,35 @@
     UsersService.$inject = ['$resource', 'Authentication'];
 
     function UsersService($resource, Authentication) {
-        var user = {};
+        var user = Authentication.user || null;
         var local = 'https://localhost\\:3434';
-        if (Authentication.user){
-            user = Authentication.user;
-        }
-        var Users = $resource('/api/users', {}, {
+        var Users = $resource('/users', {}, {
             update: {
                 method: 'PUT',
-                header:{
-                    'Auth': user.token,
+                headers:{
+
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             },
-            getInvitaions:{
+            logout:{
+                method: 'GET',
+                url: local + '/user/deauth',
+                headers: {
+
+                }
+            },
+            getconversations:{
+                method: 'GET',
+                url: local + '/user/conversations',
+                headers: {
+
+                }
+            },
+            getinvitaions:{
                 method: 'GET',
                 url: local + '/users/conversations/invitations',
-                header: {
-                    'Auth': user.token,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                headers: {
+
                 },
                 params:{
                     username: '@username'
@@ -36,17 +46,13 @@
             getcontacts:{
                 method: 'GET',
                 url: local + '/user/contacts',
-                header: {
-                    'Auth': user.token,
-                },
 
             },
             addcontacts:{
                 method: 'POST',
                 url: local + '/users/:username/contacts',
-                header: {
-                    'Auth': user.token,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                headers: {
+
                 },
                 params:{
                     username: '@username'
@@ -85,7 +91,20 @@
             },
             addContacts: function (users) {
                 return this.addcontacts(users).$promise;
+            },
+            getInvitations: function () {
+                return this.getinvitaions().$promise;
+            },
+            getContacts: function () {
+                return this.getcontacts().$promise;
+            },
+            getConversations: function () {
+                return this.getconversations().$promise;
+            },
+            logOut: function () {
+                return this.logout().$promise;
             }
+
         });
 
         return Users;

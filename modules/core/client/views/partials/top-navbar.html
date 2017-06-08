@@ -4,10 +4,10 @@
   <div class="navbar-header">
     <a ui-sref="app.articles.list" class="navbar-brand">
       <div class="brand-logo">
-        <img src="img/brand/logo.png" alt="App Logo" class="img-responsive" />
+        <img src="" class="img-responsive" />
       </div>
       <div class="brand-logo-collapsed">
-        <img src="img/brand/logo-single.png" alt="App Logo" class="img-responsive" />
+        <img src="" class="img-responsive" />
       </div>
     </a>
   </div>
@@ -84,15 +84,12 @@
           <li>
             <a ui-sref="app.settings.profile">Edit Profile</a>
           </li>
-          <li>
-            <a ui-sref="app.settings.accounts">Manage Social Accounts</a>
-          </li>
           <li ng-show="authentication.user.provider === 'local'">
             <a ui-sref="app.settings.password">Change Password</a>
           </li>
           <li class="divider"></li>
-          <li>
-            <a href="/api/auth/signout" target="_self">Signout</a>
+          <li ng-controller="AuthenticationController as vm">
+            <a ng-click="vm.logout" >Signout</a>
           </li>
         </ul>
       </li>

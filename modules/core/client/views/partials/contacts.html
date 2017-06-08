@@ -1,11 +1,14 @@
 <h3 class="text-center text-thin">Contacts</h3>
-<ul class="nav">
+<ul class="nav" ng-controller="HeaderController">
    <!-- START list title-->
    <li class="p">
       <small class="text-muted">ONLINE</small>
    </li>
    <!-- END list title-->
-   <li>
+
+  <button class="btn btn-success btn-sm" ng-click="getContacts()">Sync</button>
+   <li   ng-repeat="user in contacts">
+
       <!-- START User status-->
       <a href="#" class="media-box p mt0">
          <span class="pull-right">

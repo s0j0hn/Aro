@@ -29,27 +29,30 @@
 <!--</section>-->
 <div ng-controller="ChatController" class="container-fluid">
 
-    <div class="row chat-toolbar-row">
-      <div class="col-sm-12">
-        <div class="btn-group chat-toolbar" role="group" aria-label="...">
-          <button id="chat-leave" ng-click="quitRoom(actualChannel)" class="btn btn-default ticket-option" type="button">
-            <i class="glyphicon glyphicon-remove-sign"></i> Leave Chat
-          </button>
-          <button id="chat-invite" class="btn btn-default ticket-option" type="button">
-            <i class="glyphicon glyphicon-plus"></i> Add User
-          </button>
-          <button id="chat-customer" class="btn btn-default ticket-option" type="button">
-            <i class="glyphicon glyphicon-user"></i> Remove User
-          </button>
-          <button id="chat-create-ticket" class="btn btn-default ticket-option" type="button">
-            <i class="glyphicon glyphicon-pencil"></i> Add Moderator
-          </button>
-          <button id="chat-add-ticket" class="btn btn-default ticket-option" type="button">
-            <i class="glyphicon glyphicon-plus"></i> Delete Channel
-          </button>
-        </div>
+  <div class="row chat-toolbar-row">
+    <div class="col-sm-12">
+      <div class="btn-group chat-toolbar" role="group" aria-label="...">
+        <button id="chat-leave" ng-click="quitRoom(actualChannel)" class="btn btn-default ticket-option" type="button">
+          <i class="glyphicon glyphicon-remove-sign"></i> Leave Chat
+        </button>
+        <button id="chat-invite" class="btn btn-default ticket-option" type="button">
+          <i class="glyphicon glyphicon-plus"></i> Add User
+        </button>
+        <button id="chat-customer" class="btn btn-default ticket-option" type="button">
+          <i class="glyphicon glyphicon-user"></i> Remove User
+        </button>
+        <button id="chat-create-ticket" class="btn btn-default ticket-option" type="button">
+          <i class="glyphicon glyphicon-pencil"></i> Add Moderator
+        </button>
+        <button id="chat-add-ticket" class="btn btn-default ticket-option" type="button">
+          <i class="glyphicon glyphicon-plus"></i> Add Channel
+        </button>
+        <button id="chat-add-ticket" class="btn btn-default ticket-option" type="button">
+          <i class="glyphicon glyphicon-plus"></i> {{clientInfo.ip}}
+        </button>
       </div>
     </div>
+  </div>
 
 
 </div>
@@ -58,7 +61,7 @@
   <div class="col col-md">
     <div class="pr">
       <!-- START mailbox list-->
-      <div uib-collapse="channelsMenuCollapsed" class="mb-boxes">
+      <div class="mb-boxes">
         <div class="panel panel-default">
           <div class="panel-body">
             <ul class="nav nav-pills nav-stacked">
@@ -66,9 +69,23 @@
                 <small class="text-muted">Channels</small>
               </li>
               <li ui-sref-active="active" ng-repeat="channel in channels">
-                <a ng-click="joinRoom(channel)">
-                  <em ng-class="channel.icon" class="fa fa-fw fa-lg"></em>
+                <a ng-class="{'btn btn-primary' : actualChannel.name == channel.name }" ng-click="joinRoom(channel)">
+                  <span class="label label-green pull-right" ng-if="channel.alerts">{{channel.alerts}}</span>
+                  <em class="fa fa-fw fa-lg" ng-class="channel.icon"></em>
                   <span>{{channel.name}}</span>
+                </a>
+              </li>
+              <li class="p">
+                <small class="text-muted">Users in {{actualChannel.name}}</small>
+              </li>
+              <li class="p-h" >
+                <a class="pv-sm" >
+                  <span class="circle" ng-class="'circle-green'"></span>
+                  <span>Jan</span>
+                </a>
+                <a class="pv-sm" >
+                  <span class="circle" ng-class="'circle-' + user.status.color"></span>
+                  <span>{{user.username}}</span>
                 </a>
               </li>
             </ul>
@@ -82,7 +99,7 @@
     <!-- END action buttons-->
     <div class="panel panel-default">
       <div class="panel-body">
-        <div class="row current-chat-area" >
+        <div class="row current-chat-area" scroll-glue>
           <div class="col-md-12">
             <ul class="media-list">
               <li ng-repeat="message in messages | orderBy: 'created' | filter: {room: actualChannel.name}" class="media">
@@ -95,8 +112,7 @@
                       <p class="pull-right">{{message.created | date: 'HH:mm dd/MM'}}</p>
                     </strong>
                     <br>
-                    <div ng-bind-html="message.text | embed" class="media-body">
-
+                    <div ng-bind-html="message.text | embed:{sanitizeHtml:true}">
                     </div>
                     <div ng-if="isValid(message.text)" ng-init="neImageLong = false" ng-class="{false:'ne-image', true:'ne-image ne-image-long'}[neImageLong]">
                       <div class="ne-image-wrapper">
@@ -113,14 +129,21 @@
       </div>
       <div>
         <form ng-submit="sendMessage();">
-          <fieldset>
-            <div class="input-group">
-              <input type="text" id="messageText" name="messageText" class="form-control" ng-model="messageText" placeholder="Enter new message">
-              <span class="input-group-btn">
-                <button type="submit" class="btn btn-primary" ng-disabled="!messageText.length">Submit</button>
+          <!--<div ng-hide="!messageText" class="input-group">-->
+            <!--<span class="input-group-addon"-->
+                  <!--smilies-selector="messageText"-->
+                  <!--smilies-placement="right"-->
+                  <!--smilies-title="Smilies"></span>-->
+            <!--<input ng-model="messageText" focus-on-change="messageText" class="form-control" autocomplete="off">-->
+          <!--</div>-->
+          <div class="input-group">
+            <input data-emojiable="true" type="text" id="messageText" name="messageText" class="form-control input-lg" ng-model="messageText" placeholder="Enter new message" autocomplete="off">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-lg btn-primary" ng-disabled="!messageText.length">Submit</button>
               </span>
-            </div>
-          </fieldset>
+          </div>
+
+
         </form>
       </div>
     </div>

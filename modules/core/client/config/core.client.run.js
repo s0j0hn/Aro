@@ -5,9 +5,9 @@
         .module('core')
         .run(appRun);
 
-    appRun.$inject = ['$rootScope', '$state', '$stateParams', '$window', '$templateCache', 'Colors'];
+    appRun.$inject = ['$rootScope', '$state', '$stateParams', '$window', '$templateCache'];
 
-    function appRun($rootScope, $state, $stateParams, $window, $templateCache, Colors) {
+    function appRun($rootScope, $state, $stateParams, $window, $templateCache) {
 
         // Hook into ocLazyLoad to setup AngularGrid before inject into the app
         // See "Creating the AngularJS Module" at
@@ -31,9 +31,6 @@
             }
         });*/
 
-        // Allows to use branding color with interpolation
-        // {{ colorByName('primary') }}
-        $rootScope.colorByName = Colors.byName;
 
         // cancel click event easily
         $rootScope.cancel = function($event) {

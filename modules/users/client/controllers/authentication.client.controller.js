@@ -5,10 +5,11 @@
         .module('app.users')
         .controller('AuthenticationController', AuthenticationController);
 
-    AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$window', 'Authentication', 'PasswordValidator','$log','$http','$localStorage'];
+    AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$window', 'Authentication', 'PasswordValidator','$log','$localStorage'];
 
-    function AuthenticationController($scope, $state, UsersService, $window, Authentication, PasswordValidator, $log, $http, $localStorage) {
+    function AuthenticationController($scope, $state, UsersService, $window, Authentication, PasswordValidator, $log, $localStorage) {
         var vm = this;
+
 
         vm.authentication = Authentication;
         vm.getPopoverMsg = PasswordValidator.getPopoverMsg;
@@ -16,34 +17,29 @@
         vm.signin = signin;
         vm.logout = logout;
         vm.usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
-        vm.setWidgetId = setWidgetId;
-        vm.setResponse = setResponse;
-        vm.cbExpiration = cbExpiration;
-        vm.widgetId = null;
-        vm.recaptchatResponse = null;
+        vm.contacts = {};
+        vm.getcontacts = getcontacts;
 
-        // Get an eventual error defined in the URL query string:
-        //if ($location.search().err) {
-        //Notification.error({ message: $location.search().err });
-        //}
 
-        // If user is signed in then redirect back app.articles.list
         if (vm.authentication.user) {
             $state.go('app.home');
         }
 
-        function setWidgetId(widgetId) {
-            vm.widgetId = widgetId;
+        function getcontacts() {
+            UsersService.getContacts().then(onGetContactsSuccess).catch(onGetContactsError);
         }
 
 
-        function setResponse(response) {
-            vm.recaptchatResponse = response;
+        function onGetContactsSuccess(response) {
+
+            console.log('Success get contacts');
+            // swal('Success', 'Contacts get with success', 'success');
         }
 
-        function cbExpiration() {
-
+        function onGetContactsError(response) {
+            // swal('Error', response.data.status.description, 'error');
         }
+
 
         function signup(isValid) {
 
@@ -84,9 +80,12 @@
                 .catch(onUserSigninError);
         }
 
+
         function logout() {
 
-            UsersService.logout()
+            $localStorage.clear();
+            $window.$localStorage.clear();
+            UsersService.logOut()
                 .then(onLogoutSuccess)
                 .catch(onLogoutSuccess);
         }
@@ -98,8 +97,9 @@
             //vm.authentication.user = response;
             //Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Signup successful!' });
             // And redirect to the previous or app.articles.list page
+            swal('Success', 'Inscription : avec success');
             $state.go($state.previous.state.name || 'page.authentication.signin', $state.previous.params);
-            swal('Success', 'Inscription : ' + response.data.name, ' avec success');
+
         }
 
         function onUserSignupError(response) {
@@ -112,10 +112,10 @@
             vm.authentication.user = response.data;
             vm.authentication.user.username = response.data.name;
             vm.authentication.user.profileImageURL = 'modules/users/client/img/profile/default.png';
-            // $localStorage.set('user', response.data);
             vm.authentication.user.roles = ['user'];
 
             // And redirect to the previous or app.home page
+            $localStorage.user = response.data;
             $state.go($state.previous.state.name || 'app.home', $state.previous.params);
             swal('Success', 'Welcome  ' + response.data.name, 'success');
         }
@@ -127,6 +127,9 @@
 
         function onLogoutSuccess(response) {
 
+            $localStorage.$reset();
+            $localStorage.clear();
+            $window.$localStorage.clear();
             // And redirect to the previous or app.home page
             $state.go($state.previous.state.name || 'app.home', $state.previous.params);
             swal('Success', 'Welcome  ' + response.data.name, 'success');

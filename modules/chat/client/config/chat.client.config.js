@@ -10,6 +10,7 @@ angular.module('app.chat').run(['Menus',
             iconClass: 'fa fa-weixin',
             translate: 'sidebar.chat',
             type: 'item',
+            position: 2,
             roles: ['user','admin']
         });
         Menus.addMenuItem('sidebar', {
@@ -17,6 +18,7 @@ angular.module('app.chat').run(['Menus',
             state: 'app.chat.channels',
             type: 'item',
             iconClass: 'icon-cup',
+            translate: 'sidebar.channels',
             position: 9,
             roles: ['user','admin']
         });
@@ -24,8 +26,9 @@ angular.module('app.chat').run(['Menus',
             title: 'Home',
             state: 'app.home',
             type: 'item',
-            iconClass: 'icon-cup',
-            position: 2,
+            iconClass: 'fa fa-home',
+            translate: 'sidebar.home',
+            position: 1,
             roles: ['*']
         });
 

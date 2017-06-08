@@ -2,15 +2,24 @@
   "dashboard": {
     "WELCOME": "Bienvenu chez {{appName}}"
   },
-  "topbar": {
-    "search": {
-      "PLACEHOLDER": "Tapez ici ..."
-    }
-  },
   "sidebar": {
     "WELCOME": "Bienvenu",
-    "articles": "Articles",
     "chat": "Tchat",
-    "channels": "Channels"
+    "channels": "Conversations",
+    "home": "Accueil"
+  },
+  "chat": {
+    "button":{
+      "submit": "Soumettre",
+      "adduser": "Ajouter Utilisateur",
+      "leave": "Quitter",
+      "addmoderator": "Ajouter Moderateur",
+      "addchannel": "Ajouter Conversation",
+      "removeuser": "Supprimer Utilisateur"
+
+    },
+    "usersin": "Utilisateurs",
+    "placeholder": "Tapez Ici"
+
   }
 }

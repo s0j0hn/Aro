@@ -14,8 +14,8 @@ var ApplicationConfiguration = (function () {
       'pascalprecht.translate',
       'oc.lazyLoad', 'cfp.loadingBar',
       'ngSanitize','tmh.dynamicLocale',
-      'textAngular','vcRecaptcha',
-      'ngEmbed'
+      'ngEmbed','luegg.directives',
+      'ngEmojiPicker'
   ];
 
   // Add a new vertical module

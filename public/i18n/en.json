@@ -2,14 +2,25 @@
   "dashboard": {
     "WELCOME": "Welcome to {{appName}}"
   },
-  "topbar": {
-    "search": {
-      "PLACEHOLDER": "Type and hit enter.."
-    }
-  },
+
   "sidebar": {
     "WELCOME": "Welcome",
-    "articles": "Articles",
-    "chat": "Chat"
+    "chat": "Chat",
+    "home": "Home",
+    "channels": "Channels"
+  },
+  "chat": {
+    "button":{
+      "submit": "Submit",
+      "adduser": "Add User",
+      "leave": "Leave",
+      "addmoderator": "Add Moderator",
+      "addchannel": "Add Channel",
+      "removeuser": "Delete User"
+
+    },
+    "usersin": "Users",
+    "placeholder": "Your message here"
+
   }
 }

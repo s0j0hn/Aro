@@ -18,7 +18,6 @@
             // list of available languages
             available: {
                 'en':       'English',
-                'es_AR':    'Español',
                 'fr':       'Français'
             },
             // display always the current ui language

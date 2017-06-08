@@ -7,11 +7,11 @@
     .module('app.users.services')
     .factory('Authentication', Authentication);
 
-  Authentication.$inject = ['$window'];
+  Authentication.$inject = ['$localStorage'];
 
-  function Authentication($window) {
+  function Authentication($localStorage) {
     var auth = {
-      user: $window.user
+      user: $localStorage.user || null
     };
 
     return auth;

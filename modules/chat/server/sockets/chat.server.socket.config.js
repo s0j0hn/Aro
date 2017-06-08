@@ -2,21 +2,21 @@
 
 // Create the chat configuration
 module.exports = function (io, socket) {
-    var defaultRoom = 'Staff';
-    var rooms = [
-        {
-            id: 1,
-            name: 'General',
-            icon: 'fa-clock-o'
-        },
-        {
-            id: 2,
-            name: 'Staff',
-            icon: 'fa-clock-o'
-        }];
-    //Emit the rooms array
-    socket.emit('setup', {
-        rooms: rooms
+
+    socket.on('userKicked', function(data) {
+        socket.leave(data.room);
+        io.in(data.room).emit('userLeft', {
+            type: 'status',
+            text: 'kicked from this Channel by' + data.user.username,
+            room: data.room,
+            created: Date.now(),
+            profileImageURL: data.user.profileImageURL,
+            username: data.user.username
+        });
+    });
+
+    socket.on('getClients', function (data) {
+        var clients = io.sockets.clients(data.room);
     });
 
     socket.on('quitRoom', function(data) {
@@ -28,6 +28,22 @@ module.exports = function (io, socket) {
             created: Date.now(),
             profileImageURL: data.user.profileImageURL,
             username: data.user.username
+        });
+    });
+
+    socket.on('getSetup', function(data) {
+        socket.join(data.room);
+        io.in(data.room).emit('userJoined', {
+            type: 'status',
+            text: 'just joined',
+            room: data.room,
+            created: Date.now(),
+            profileImageURL: data.user.profileImageURL,
+            username: data.user.username
+        });
+        socket.emit('clientInfo',{
+            ip: socket.request.connection.remoteAddress
+
         });
     });
 
@@ -57,12 +73,8 @@ module.exports = function (io, socket) {
 
     // Emit the status event when a socket client is disconnected
     socket.on('disconnect', function (username) {
-        io.in(rooms).emit('newMessage', {
-            type: 'status',
-            room: defaultRoom,
-            text: 'disconnected',
-            created: Date.now(),
-            username: username
+        socket.broadcast.emit('broadcast', {
+            type: 'disconnect'
         });
     });
 };
