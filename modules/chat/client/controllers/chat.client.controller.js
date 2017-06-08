@@ -101,7 +101,6 @@ angular.module('app.chat').controller('ChatController',
 
         // Send socket to quit room
         $scope.quitRoom = function (channel) {
-            $scope.actualChannel = '';
             $scope.channels.pop();
             Socket.emit('quitRoom', {
                 room: channel.name,

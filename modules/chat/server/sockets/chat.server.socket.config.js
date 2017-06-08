@@ -48,7 +48,7 @@ module.exports = function (io, socket) {
 
     socket.on('getSetup', function(data) {
         socket.join(data.room);
-        var clients = getClientsInRoom(io, data.romm);
+        var clients = getClientsInRoom(io, data.room);
         io.in(data.room).emit('userJoined', {
             type: 'status',
             text: 'just joined',

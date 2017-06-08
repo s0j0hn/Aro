@@ -51,7 +51,7 @@
            {{socketClient.ip}}
         </button>
         <button  class="btn btn-default ticket-option" type="button">
-          Clients connected :{{clients.length}}
+          Clients:{{clients.length}}
         </button>
       </div>
     </div>
@@ -112,7 +112,7 @@
                       <p class="pull-right">{{message.created | date: 'HH:mm dd/MM'}}</p>
                     </strong>
                     <br>
-                    <div ng-bind-html="trustedHtml(message.text) | embed:{sanitizeHtml:true}">
+                    <div ng-bind-html="message.text | embed:{sanitizeHtml:false}">
                     </div>
                     <div ng-if="isValid(message.text)" ng-init="neImageLong = false" ng-class="{false:'ne-image', true:'ne-image ne-image-long'}[neImageLong]">
                       <div class="ne-image-wrapper">
