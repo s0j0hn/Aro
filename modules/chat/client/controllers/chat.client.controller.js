@@ -59,18 +59,22 @@ angular.module('app.chat').controller('ChatController',
             $scope.messages.unshift(message);
         });
 
+        // get client ip
         Socket.on('clientInfo', function (data) {
             $scope.socketClient.ip = data.ip;
         });
 
+        // get the list of connected clients
         Socket.on('clients', function (data) {
             $scope.socketClients = data.clients;
         });
 
+        // when user left room
         Socket.on('userLeft', function (message) {
             $scope.messages.unshift(message);
         });
 
+        // when user join room
         Socket.on('userJoined', function (message) {
             $scope.messages.unshift(message);
         });
@@ -88,7 +92,7 @@ angular.module('app.chat').controller('ChatController',
                 }
             };
 
-            // Emit a 'chatMessage' message event
+            // Emit the message
             Socket.emit('newMessage', message);
 
             // Clear the message text

@@ -9,7 +9,6 @@
     function localeConfig(tmhDynamicLocaleProvider){
 
       tmhDynamicLocaleProvider.localeLocationPattern('lib/angular-i18n/angular-locale_{{locale}}.js');
-      // tmhDynamicLocaleProvider.useStorage('$cookieStore');
 
     }
 })();

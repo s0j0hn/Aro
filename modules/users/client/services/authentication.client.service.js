@@ -10,10 +10,8 @@
   Authentication.$inject = ['$localStorage'];
 
   function Authentication($localStorage) {
-    var auth = {
-      user: $localStorage.user || null
+      return {
+        user: $localStorage.user || null
     };
-
-    return auth;
   }
 }());

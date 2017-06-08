@@ -20,12 +20,7 @@
           $rootScope.availableLocales = {
             'en': 'English',
             'es': 'Spanish',
-            'de': 'German',
-            'fr': 'French',
-            'ar': 'Arabic',
-            'ja': 'Japanese',
-            'ko': 'Korean',
-            'zh': 'Chinese'};
+            'fr': 'French'};
 
           $rootScope.model = {selectedLocale: 'fr'};
 
